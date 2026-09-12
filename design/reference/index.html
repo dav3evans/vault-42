@@ -1,0 +1,730 @@
+
+<!DOCTYPE html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vault 42 | Laser Tag & Axe Throwing in Nuneaton</title>
+    <meta name="description"
+      content="Step into Vault 42 in Nuneaton for Hexforce Laser Tag and augmented axe throwing inside a reclaimed HEX Corp world. Escape rooms are planned for a later launch phase." />
+    <meta name="theme-color" content="#0b131d" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@500;600;700;800&family=Share+Tech+Mono&display=swap"
+      rel="stylesheet">
+    <style>
+    :root{
+      --bg:#071018;
+      --bg2:#0d1822;
+      --panel:#112130;
+      --panel2:#0d1b29;
+      --line:rgba(83,129,159,.18);
+      --text:#e8e0cc;
+      --muted:#b9c6d4;
+      --muted2:#91a4b9;
+      --gold:#fecf18;
+      --gold2:#d8aa00;
+      --gold3:#ffdd5b;
+      --green:#79a05b;
+      --max:1240px;
+      --shadow:rgba(0,0,0,.42);
+      --warn:repeating-linear-gradient(-55deg,var(--gold) 0,var(--gold) 16px,#08111a 16px,#08111a 32px);
+      --radius:22px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:'Barlow',sans-serif;
+      color:var(--text);
+      background:radial-gradient(circle at 50% 0%, rgba(254,207,24,.07), transparent 28%), linear-gradient(180deg,#071018 0%,#08111a 42%,#0b141d 100%);
+      overflow-x:hidden;
+    }
+    body::before{
+      content:"";position:fixed;inset:0;pointer-events:none;z-index:4;
+      background:url('assets/grime-overlay.png') center/580px repeat;
+      mix-blend-mode:soft-light;opacity:.32;
+    }
+    body::after{
+      content:"";position:fixed;inset:0;pointer-events:none;z-index:3;
+      background:url('assets/vines-overlay.svg') center top / cover no-repeat;
+      opacity:.36;
+    }
+    img{max-width:100%;display:block}
+    a{color:inherit}
+    .container{width:min(var(--max), calc(100% - 28px));margin:0 auto;position:relative;z-index:2}
+    .section{padding:86px 0;position:relative}
+    .eyebrow{display:flex;align-items:center;gap:12px;font:600 .68rem 'Share Tech Mono',monospace;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+    .eyebrow::before{content:"";width:28px;height:2px;background:linear-gradient(90deg,var(--gold),transparent)}
+    .display{font-family:'Bebas Neue',sans-serif}
+    h1,h2,h3,h4,p{margin:0}
+
+    .topbar{position:sticky;top:0;z-index:20;backdrop-filter:blur(12px);background:linear-gradient(180deg,rgba(5,10,15,.95),rgba(5,10,15,.78));border-bottom:1px solid rgba(254,207,24,.10);box-shadow:0 10px 26px rgba(0,0,0,.25)}
+    .topbar-inner{width:min(var(--max), calc(100% - 20px));margin:0 auto;min-height:74px;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:10px 0}
+    .brand{display:flex;align-items:center;gap:12px;text-decoration:none;min-width:0}
+    .brand-logo{width:56px;height:56px;flex:0 0 auto}
+    .brand-logo img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 10px 18px rgba(0,0,0,.38))}
+    .brand-title{font-family:'Bebas Neue',sans-serif;font-size:1.75rem;letter-spacing:.10em;line-height:.9;color:#f4e8af}
+    .brand-sub{margin-top:4px;font:.54rem 'Share Tech Mono',monospace;letter-spacing:.22em;text-transform:uppercase;color:var(--muted2);white-space:nowrap}
+    .nav{display:flex;align-items:center;gap:16px;flex-wrap:wrap;justify-content:flex-end}
+    .nav a{font-family:'Barlow Condensed',sans-serif;font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;text-decoration:none;color:var(--muted);transition:.18s ease}
+    .nav a:hover{color:var(--gold)}
+    .book-btn,.btn-primary,.btn-secondary,.chip-btn,.sticky-btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;font-family:'Bebas Neue',sans-serif;letter-spacing:.14em;min-height:50px;transition:.18s ease}
+    .book-btn,.btn-primary,.sticky-btn{color:#0b1118;background:linear-gradient(180deg,var(--gold3),var(--gold));clip-path:polygon(9px 0%,100% 0%,calc(100% - 9px) 100%,0% 100%);box-shadow:0 8px 22px rgba(254,207,24,.18), 4px 4px 0 rgba(97,72,0,.72)}
+    .book-btn{padding:0 20px;font-size:1rem}
+    .btn-primary{padding:0 28px;font-size:1rem}
+    .btn-secondary{padding:0 28px;color:var(--text);border:1px solid rgba(254,207,24,.24);background:rgba(10,18,26,.46);clip-path:polygon(9px 0%,100% 0%,calc(100% - 9px) 100%,0% 100%)}
+    .chip-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+    .chip-btn{min-height:42px;padding:0 18px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);font-size:.9rem;color:var(--muted)}
+
+    .hero{position:relative;min-height:100svh;padding:34px 0 70px;overflow:hidden;background:linear-gradient(90deg, rgba(4,8,12,.88) 0%, rgba(4,8,12,.74) 38%, rgba(4,8,12,.56) 68%, rgba(4,8,12,.84) 100%), url('assets/hero-wasteland.webp') center/cover no-repeat}
+    .hero::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(7,16,24,.10), rgba(7,16,24,.26) 72%, rgba(7,16,24,.92)), url('assets/panel-overlay.svg') center/cover no-repeat;opacity:.62}
+    .hero::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 72% 38%, rgba(255,165,76,.16), transparent 28%), radial-gradient(circle at 16% 18%, rgba(254,207,24,.10), transparent 24%);pointer-events:none}
+    .hero-grid{position:relative;z-index:2;display:grid;grid-template-columns:minmax(0,1.08fr) minmax(300px,.92fr);gap:34px;align-items:end;padding-top:34px}
+    .hero-copy{padding-top:22px}
+    .hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(3.5rem,10vw,7.6rem);line-height:.88;letter-spacing:.03em;text-shadow:0 14px 28px rgba(0,0,0,.52)}
+    .hero h1 .accent{color:var(--gold)}
+    .hero h1 .outline{display:block;color:transparent;-webkit-text-stroke:1px rgba(244,232,175,.34)}
+    .hero-lead{margin-top:18px;max-width:690px;font-size:1.14rem;line-height:1.75;color:#d7deea}
+    .hero p.sub{margin-top:12px;max-width:660px;font-size:1rem;line-height:1.82;color:rgba(232,224,204,.74)}
+    .hero-cta{display:flex;gap:14px;flex-wrap:wrap;margin-top:30px}
+    .hero-highline{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:28px;max-width:760px}
+    .hero-stat{padding:16px 14px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.05);backdrop-filter:blur(6px)}
+    .hero-stat strong{display:block;font-family:'Bebas Neue',sans-serif;font-size:1.9rem;line-height:1;color:var(--gold)}
+    .hero-stat span{display:block;margin-top:4px;font:.58rem 'Share Tech Mono',monospace;letter-spacing:.18em;text-transform:uppercase;color:var(--muted2)}
+    .hero-card{justify-self:end;width:min(100%,430px);background:linear-gradient(180deg, rgba(10,20,30,.86), rgba(8,15,22,.92));border:1px solid rgba(254,207,24,.12);box-shadow:0 26px 60px rgba(0,0,0,.38);position:relative;overflow:hidden;border-radius:18px}
+    .hero-card::before{content:"";position:absolute;inset:0;background:var(--warn);opacity:.05;mix-blend-mode:screen;pointer-events:none}
+    .hero-card-head{padding:16px 20px;border-bottom:1px solid rgba(254,207,24,.10);display:flex;align-items:center;justify-content:space-between;gap:14px}
+    .hero-card-head span:first-child{font:.60rem 'Share Tech Mono',monospace;letter-spacing:.26em;text-transform:uppercase;color:var(--gold)}
+    .hero-card-head span:last-child{font:.58rem 'Share Tech Mono',monospace;letter-spacing:.18em;text-transform:uppercase;color:#8bd178}
+    .hero-logo-wrap{padding:24px 24px 14px}
+    .hero-logo-wrap img{width:min(100%,330px);margin:0 auto;filter:drop-shadow(0 14px 28px rgba(0,0,0,.42))}
+    .hero-card-copy{padding:0 24px 24px;display:grid;gap:12px}
+    .hero-card-copy p{font-size:.96rem;line-height:1.72;color:rgba(232,224,204,.74)}
+
+    .quick-book{margin-top:-28px;position:relative;z-index:5}
+    .quick-book-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+    .quick-card{background:linear-gradient(180deg, rgba(14,26,38,.94), rgba(9,18,26,.98));border:1px solid rgba(83,129,159,.16);box-shadow:0 16px 36px rgba(0,0,0,.26);overflow:hidden;border-radius:18px}
+    .quick-top{height:6px;background:var(--warn);opacity:.44}
+    .quick-inner{padding:18px}
+    .quick-inner b{display:block;font-family:'Bebas Neue',sans-serif;font-size:1.45rem;letter-spacing:.04em;color:#f4e8af}
+    .quick-inner p{margin-top:8px;font-size:.93rem;line-height:1.62;color:rgba(232,224,204,.67)}
+
+    .ticker{position:relative;background:linear-gradient(180deg,var(--gold3),var(--gold));border-top:2px solid rgba(255,255,255,.18);border-bottom:2px solid rgba(0,0,0,.25);overflow:hidden}
+    .ticker-track{display:flex;white-space:nowrap;animation:scroll 28s linear infinite}
+    .ticker-item{font-family:'Bebas Neue',sans-serif;color:#0b1118;letter-spacing:.18em;font-size:.94rem;padding:10px 22px;flex-shrink:0}
+    .ticker-dot{padding:10px 8px;color:#19304d}
+    @keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+    .section-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.3rem,5vw,4.6rem);letter-spacing:.04em;line-height:.92}
+    .section-copy{margin-top:16px;max-width:770px;font-size:1.03rem;line-height:1.82;color:rgba(232,224,204,.74)}
+    .panel{background:linear-gradient(180deg, rgba(14,26,38,.90), rgba(9,18,26,.96));border:1px solid rgba(83,129,159,.16);box-shadow:0 16px 40px rgba(0,0,0,.24);position:relative;overflow:hidden;border-radius:22px}
+    .panel::before{content:"";position:absolute;top:0;left:0;right:0;height:5px;background:var(--warn);opacity:.35}
+    .panel::after{content:"";position:absolute;inset:0;background:url('assets/distress.svg') center/cover no-repeat;opacity:.08;mix-blend-mode:soft-light;pointer-events:none}
+    .panel-inner{padding:28px}
+
+    .story{background:linear-gradient(180deg, rgba(10,18,26,.20), rgba(10,18,26,.65));border-top:1px solid rgba(254,207,24,.08);border-bottom:1px solid rgba(254,207,24,.08)}
+    .story-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,430px);gap:28px;align-items:center}
+    .story-list{display:grid;gap:14px;margin-top:24px}
+    .story-item{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:flex-start}
+    .story-item b{width:34px;height:34px;display:grid;place-items:center;background:rgba(254,207,24,.10);border:1px solid rgba(254,207,24,.18);color:var(--gold);font-family:'Bebas Neue',sans-serif;font-size:1.1rem}
+    .story-item p{font-size:.98rem;line-height:1.72;color:rgba(232,224,204,.72)}
+    .organic-divider{min-height:420px;border:1px solid rgba(255,255,255,.05);background:linear-gradient(180deg, rgba(4,8,12,.14), rgba(4,8,12,.46)), url('assets/guide-vine-lights.webp') center/cover no-repeat;box-shadow:0 20px 50px rgba(0,0,0,.30);border-radius:22px}
+
+    .experiences-grid,.price-grid,.why-grid,.rooms-grid{display:grid;gap:20px;margin-top:30px}
+    .experiences-grid{grid-template-columns:repeat(3,1fr)}
+    .exp-card{position:relative;display:flex;flex-direction:column;min-height:100%;background:linear-gradient(180deg, rgba(14,26,38,.9), rgba(9,18,26,.96));border:1px solid rgba(83,129,159,.18);box-shadow:0 16px 36px rgba(0,0,0,.24);overflow:hidden;border-radius:22px}
+    .exp-card::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(254,207,24,.04), transparent 22%);pointer-events:none}
+    .exp-top{height:6px;background:var(--warn);opacity:.45}
+    .exp-body{padding:28px 24px 24px;display:flex;flex-direction:column;height:100%}
+    .exp-tag{font:.60rem 'Share Tech Mono',monospace;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+    .exp-card h3{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:.04em;line-height:.95;margin-bottom:12px}
+    .exp-card p{font-size:.97rem;line-height:1.75;color:rgba(232,224,204,.72)}
+    .meta{display:grid;gap:8px;margin:18px 0 22px;padding-top:18px;border-top:1px solid rgba(255,255,255,.07)}
+    .meta span{font:.60rem 'Share Tech Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:var(--muted2)}
+    .meta strong{color:#f2df87;font-weight:600}
+    .bullets{display:grid;gap:10px;margin-top:16px}
+    .bullets div{display:grid;grid-template-columns:16px 1fr;gap:10px;color:rgba(232,224,204,.73);line-height:1.65;font-size:.94rem}
+    .bullets div::before{content:"◆";color:var(--gold);font-size:.74rem;transform:translateY(3px)}
+    .exp-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:auto;padding-top:22px}
+
+    .price-grid{grid-template-columns:repeat(3,1fr)}
+    .price-card{background:linear-gradient(180deg, rgba(14,26,38,.90), rgba(9,18,26,.96));border:1px solid rgba(83,129,159,.16);overflow:hidden;box-shadow:0 16px 40px rgba(0,0,0,.24);border-radius:22px}
+    .price-head{padding:22px 24px 18px;background:linear-gradient(180deg, rgba(254,207,24,.10), rgba(254,207,24,.02));border-bottom:1px solid rgba(254,207,24,.10)}
+    .price-head h3{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:.04em}
+    .price-head p{margin-top:8px;color:rgba(232,224,204,.70);line-height:1.65;font-size:.95rem}
+    .price-body{padding:24px}
+    .price-list{display:grid;gap:12px}
+    .price-row{display:flex;justify-content:space-between;gap:18px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+    .price-row span{color:rgba(232,224,204,.76)}
+    .price-row strong{color:#f4e8af;white-space:nowrap}
+    .price-note{margin-top:16px;font-size:.90rem;line-height:1.68;color:rgba(232,224,204,.62)}
+
+    .party-grid{display:grid;grid-template-columns:1.12fr .88fr;gap:22px;margin-top:30px}
+    .split-list{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:20px}
+    .mini{padding:18px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.05);border-radius:16px}
+    .mini h4{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.04em;margin-bottom:8px}
+    .mini p{color:rgba(232,224,204,.68);line-height:1.72;font-size:.94rem}
+
+    .rooms-grid{grid-template-columns:repeat(3,1fr)}
+    .room{padding:20px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.05);border-radius:16px}
+    .room h4{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.04em;margin-bottom:8px}
+    .room p{font-size:.94rem;line-height:1.68;color:rgba(232,224,204,.68)}
+    .room-meta{margin-top:14px;display:grid;gap:6px}
+    .room-meta span{font:.58rem 'Share Tech Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:var(--muted2)}
+
+    .why-grid{grid-template-columns:repeat(4,1fr)}
+    .why{padding:24px 20px;background:linear-gradient(180deg, rgba(14,26,38,.88), rgba(9,18,26,.96));border:1px solid rgba(83,129,159,.16);border-radius:18px}
+    .why b{display:block;font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.04em;color:#f4e8af;margin-bottom:8px}
+    .why p{font-size:.93rem;line-height:1.68;color:rgba(232,224,204,.68)}
+
+    .book-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:30px}
+    .action-grid{display:grid;gap:12px}
+    .action{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:16px 18px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.05);border-radius:16px}
+    .action strong{display:block;font-family:'Bebas Neue',sans-serif;font-size:1.35rem;letter-spacing:.04em}
+    .action span{display:block;margin-top:4px;color:rgba(232,224,204,.66);font-size:.92rem}
+    .contact-list{display:grid;gap:14px}
+    .contact-item{padding:16px 18px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.05);border-radius:16px}
+    .contact-item b{display:block;font:.58rem 'Share Tech Mono',monospace;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+    .contact-item a,.contact-item div:last-child{font-size:1rem;color:#f4e8af;text-decoration:none;word-break:break-word}
+    .cta-band{margin-top:24px;padding:20px 22px;background:linear-gradient(180deg, rgba(254,207,24,.12), rgba(254,207,24,.03));border:1px solid rgba(254,207,24,.16);border-radius:18px}
+    .cta-band strong{display:block;font-family:'Bebas Neue',sans-serif;font-size:1.7rem;letter-spacing:.04em;margin-bottom:8px}
+    .cta-band p{font-size:.95rem;line-height:1.7;color:rgba(232,224,204,.72)}
+
+    footer{position:relative;padding:36px 0 110px;background:#060e15;border-top:1px solid rgba(255,255,255,.06)}
+    .footer-grid{display:grid;grid-template-columns:1.3fr .8fr .8fr;gap:22px;align-items:start}
+    .footer-brand p{margin-top:12px;max-width:500px;color:rgba(232,224,204,.58);line-height:1.72}
+    .footer-title{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.10em;color:#f4e8af;margin-bottom:12px}
+    .footer-links{display:grid;gap:10px}
+    .footer-links a,.footer-links div{color:rgba(232,224,204,.62);text-decoration:none}
+    .copyright{margin-top:24px;padding-top:18px;border-top:1px solid rgba(255,255,255,.06);font:.56rem 'Share Tech Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:rgba(232,224,204,.36)}
+
+    .sticky-mobile{position:fixed;left:0;right:0;bottom:0;z-index:30;display:none;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:linear-gradient(180deg, rgba(5,10,15,.12), rgba(5,10,15,.92) 32%);backdrop-filter:blur(10px);border-top:1px solid rgba(254,207,24,.10)}
+    .sticky-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .sticky-btn{font-size:.96rem}
+
+    @media (max-width: 1100px){
+      .experiences-grid,.price-grid,.rooms-grid,.why-grid{grid-template-columns:repeat(2,1fr)}
+      .party-grid,.book-grid,.story-grid,.hero-grid,.quick-book-grid{grid-template-columns:1fr}
+      .hero-card{justify-self:start;width:min(100%,520px)}
+      .quick-book{margin-top:22px}
+    }
+    @media (max-width: 760px){
+      .topbar-inner{align-items:flex-start;flex-direction:column}
+      .nav{width:100%;justify-content:flex-start;gap:14px}
+      .hero{min-height:auto;padding-bottom:54px}
+      .hero h1{font-size:clamp(3.1rem,18vw,5rem)}
+      .hero-highline,.experiences-grid,.price-grid,.rooms-grid,.why-grid,.split-list,.footer-grid{grid-template-columns:1fr}
+      .section{padding:74px 0}
+      .book-btn{width:100%;justify-content:center}
+      .sticky-mobile{display:block}
+    }
+    @media (max-width: 520px){
+      .container{width:min(var(--max), calc(100% - 22px))}
+      .hero-cta,.exp-actions,.chip-row{flex-direction:column;align-items:stretch}
+      .btn-primary,.btn-secondary,.chip-btn{width:100%}
+      .topbar{position:sticky}
+      footer{padding-bottom:126px}
+      .nav{display:none}
+      .brand-title{font-size:1.55rem}
+      .brand-sub{white-space:normal}
+    }
+  </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a href="#top" class="brand" aria-label="Vault 42 home">
+          <div class="brand-logo"><img src="assets/logo.png"
+              alt="Vault 42 logo"></div>
+          <div>
+            <div class="brand-title">VAULT 42</div>
+            <div class="brand-sub">A Division of Hex Corp</div>
+          </div>
+        </a>
+        <nav class="nav" aria-label="Primary navigation">
+          <a href="#experiences">Experiences</a>
+          <a href="#pricing">Pricing</a>
+          <a href="#groups">Groups</a>
+          <a href="#rooms">Escape Rooms</a>
+          <a href="#book">Book</a>
+          <a href="#book" class="book-btn">Book Now</a>
+        </nav>
+      </div>
+    </header>
+
+    <section class="hero" id="top">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <div class="eyebrow">Nuneaton's immersive adventure destination</div>
+          <h1>STEP INTO <span class="accent">VAULT 42</span><span
+              class="outline">AND SURVIVE</span></h1>
+          <p class="hero-lead">A lost HEX Corp sanctuary. Reclaimed by nature.
+            Still alive. Battle through Laserforce combat, test your nerve in
+            augmented axe throwing, and get ready for the next phase of the
+            vault.</p>
+          <p class="sub">Vault 42 blends post-apocalyptic worldbuilding,
+            competitive gameplay and proper event energy into one cinematic
+            destination for families, friends, parties, corporate groups and
+            young explorers. Escape rooms are planned for a later launch phase,
+            so this page keeps the future in view without confusing what you can
+            book right now.</p>
+          <div class="hero-cta">
+            <a href="#book" class="btn-primary">Book Your Adventure</a>
+            <a href="#pricing" class="btn-secondary">See Pricing</a>
+          </div>
+          <div class="hero-highline">
+            <div class="hero-stat"><strong>Laser Tag</strong><span>From £6.95
+                pp</span></div>
+            <div class="hero-stat"><strong>Axe Throwing</strong><span>From £20
+                pp</span></div>
+            <div class="hero-stat"><strong>Open in Nuneaton</strong><span>Book
+                online now</span></div>
+          </div>
+        </div>
+
+        <aside class="hero-card" aria-label="Vault 42 at a glance">
+          <div class="hero-card-head">
+            <span>Facility Status</span>
+            <span>Systems Active</span>
+          </div>
+          <div class="hero-logo-wrap">
+            <img src="assets/logo.png" alt="Vault 42 logo with reclaimed vines">
+          </div>
+          <div class="hero-card-copy">
+            <p><strong>Book now:</strong> Hexforce Laser Tag and augmented axe
+              throwing are the live launch experiences.</p>
+            <p><strong>Coming later:</strong> Hexcape Escape Rooms are planned
+              for a later phase and will not be open on launch.</p>
+            <div class="chip-row">
+              <a class="chip-btn" href="tel:02476954242">Call 02476 954242</a>
+              <a class="chip-btn" href="#rooms">See what's planned</a>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="quick-book">
+      <div class="container quick-book-grid">
+        <div class="quick-card"><div class="quick-top"></div><div
+            class="quick-inner"><b>Book Laser Tag</b><p>Fastest route for
+              families, groups, parties and first-time visitors.</p></div></div>
+        <div class="quick-card"><div class="quick-top"></div><div
+            class="quick-inner"><b>Book Axe Throwing</b><p>High-tech Champ Throw
+              lanes with 16 interactive game modes.</p></div></div>
+        <div class="quick-card"><div class="quick-top"></div><div
+            class="quick-inner"><b>Call Us</b><p>02476 954242 for group
+              bookings, questions or launch info.</p></div></div>
+        <div class="quick-card"><div class="quick-top"></div><div
+            class="quick-inner"><b>Find Us</b><p>Unit 1 - 2, Closers Business
+              Centre, Avenue Road, Nuneaton.</p></div></div>
+      </div>
+    </section>
+
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker-track">
+        <span class="ticker-item">LASERFORCE GEN 7 ACTION</span><span
+          class="ticker-dot">◆</span>
+        <span class="ticker-item">AUGMENTED AXE THROWING</span><span
+          class="ticker-dot">◆</span>
+        <span class="ticker-item">BIRTHDAY PARTIES</span><span
+          class="ticker-dot">◆</span>
+        <span class="ticker-item">CORPORATE GROUPS</span><span
+          class="ticker-dot">◆</span>
+        <span class="ticker-item">WASTELAND WARRIORS KIDS CLUB</span><span
+          class="ticker-dot">◆</span>
+        <span class="ticker-item">ESCAPE ROOMS COMING LATER</span><span
+          class="ticker-dot">◆</span>
+        <span class="ticker-item">LASERFORCE GEN 7 ACTION</span><span
+          class="ticker-dot">◆</span>
+        <span class="ticker-item">AUGMENTED AXE THROWING</span><span
+          class="ticker-dot">◆</span>
+        <span class="ticker-item">BIRTHDAY PARTIES</span><span
+          class="ticker-dot">◆</span>
+        <span class="ticker-item">CORPORATE GROUPS</span><span
+          class="ticker-dot">◆</span>
+        <span class="ticker-item">WASTELAND WARRIORS KIDS CLUB</span><span
+          class="ticker-dot">◆</span>
+        <span class="ticker-item">ESCAPE ROOMS COMING LATER</span><span
+          class="ticker-dot">◆</span>
+      </div>
+    </div>
+
+    <section class="section story">
+      <div class="container story-grid">
+        <div>
+          <div class="eyebrow">The world of Vault 42</div>
+          <h2 class="section-title">A forgotten sanctuary. <span
+              style="color:var(--gold)">A live adventure
+              destination.</span></h2>
+          <p class="section-copy">In a world ravaged by the Great Collapse, HEX
+            Corp's once-thriving technological sanctuary stands waiting to be
+            reclaimed. As an Explorer, you'll sharpen your reflexes in Hexforce
+            Laser Tag, test your precision in augmented axe throwing, and watch
+            Vault 42 grow into its next phase over time.</p>
+          <div class="story-list">
+            <div class="story-item"><b>01</b><p><strong>Bookable now:</strong>
+                Laser tag and axe throwing are the live launch offers and are
+                positioned first throughout the page so visitors can book
+                without confusion.</p></div>
+            <div class="story-item"><b>02</b><p><strong>Clear future
+                  story:</strong> Escape rooms are shown honestly as planned
+                later, which keeps excitement high without creating launch-day
+                disappointment.</p></div>
+            <div class="story-item"><b>03</b><p><strong>Mobile-first
+                  layout:</strong> clear actions, visible pricing, fast-scanning
+                sections and sticky booking buttons keep the page simple to use
+                on phones.</p></div>
+          </div>
+        </div>
+        <div class="organic-divider" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <section class="section" id="experiences">
+      <div class="container">
+        <div class="eyebrow">Core experiences</div>
+        <h2 class="section-title">What you can <span
+            style="color:var(--gold)">book now</span></h2>
+        <p class="section-copy">This section keeps the launch offer crystal
+          clear. The first two experiences are live and bookable. The third
+          shows what is coming next so the world still feels complete.</p>
+        <div class="experiences-grid">
+          <article class="exp-card">
+            <div class="exp-top"></div>
+            <div class="exp-body">
+              <div class="exp-tag">Hexforce Laser Tag</div>
+              <h3>Experience the ultimate adventure</h3>
+              <p>Step into the Hexforce Arena, where Explorers navigate a
+                post-apocalyptic battlefield filled with high-tech obstacles and
+                strategic challenges. Laserforce Gen 7 battle suits deliver live
+                scoring, power-ups and immersive sound effects.</p>
+              <div class="meta">
+                <span><strong>Live now</strong> · Ages 7 and up</span>
+                <span><strong>Game modes</strong> · Base Assault · Capture the
+                  Flag · Zombies vs Survivors · Domination</span>
+              </div>
+              <div class="bullets">
+                <div>Great for families, friends, youth groups, parties and
+                  competitive sessions.</div>
+                <div>Exclusive hire available for up to 30 players.</div>
+                <div>Wasteland Warriors Kids Club runs every Saturday and Sunday
+                  at 10:20 AM.</div>
+              </div>
+              <div class="exp-actions">
+                <a href="#pricing" class="btn-primary">See Laser Tag Pricing</a>
+                <a href="#book" class="btn-secondary">Book Laser Tag</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="exp-card">
+            <div class="exp-top"></div>
+            <div class="exp-body">
+              <div class="exp-tag">Vault 42 Axe Throwing</div>
+              <h3>Melee weapons training for the wasteland</h3>
+              <p>Unlike static axe lanes, Vault 42's digital Champ Throw system
+                gives you moving targets, real-time scoring and 16 interactive
+                game modes. It is built for beginners, seasoned throwers, casual
+                groups and competitive sessions.</p>
+              <div class="meta">
+                <span><strong>Live now</strong> · 16 interactive game
+                  modes</span>
+                <span><strong>Best for</strong> · friends · couples · corporate
+                  groups · celebrations</span>
+              </div>
+              <div class="bullets">
+                <div>Dynamic scoring and live feedback keep every session
+                  fresh.</div>
+                <div>Perfect for all skill levels with guidance from your Vault
+                  Custodians.</div>
+                <div>A stronger, more tactical alternative to standard
+                  fixed-target venues.</div>
+              </div>
+              <div class="exp-actions">
+                <a href="#pricing" class="btn-primary">See Axe Pricing</a>
+                <a href="#book" class="btn-secondary">Book Axe Throwing</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="exp-card" id="rooms">
+            <div class="exp-top"></div>
+            <div class="exp-body">
+              <div class="exp-tag">Hexcape Escape Rooms</div>
+              <h3>Planned for a later launch phase</h3>
+              <p>Hexcape is part of the wider Vault 42 world, but the escape
+                rooms will not be open at launch. They remain on the page
+                because they are important to the long-term story and future
+                offer.</p>
+              <div class="meta">
+                <span><strong>Not open at launch</strong> · Planned for later
+                  phase</span>
+                <span><strong>Future rooms</strong> · Reactor Room · Bio-Dome ·
+                  Command Centre</span>
+              </div>
+              <div class="bullets">
+                <div>The Reactor Room: stabilise the failing power core before
+                  meltdown.</div>
+                <div>The Bio-Dome: navigate a botanical lab overrun by
+                  mutation.</div>
+                <div>The Command Centre: decrypt the past and access the truth
+                  behind the Collapse.</div>
+              </div>
+              <div class="exp-actions">
+                <a href="#book" class="btn-secondary">Register Interest</a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section pricing" id="pricing">
+      <div class="container">
+        <div class="eyebrow">Current public pricing</div>
+        <h2 class="section-title">Simple pricing. <span
+            style="color:var(--gold)">Easy to book.</span></h2>
+        <p class="section-copy">This page keeps the main price points visible
+          without forcing people to hunt. That means faster decisions and fewer
+          drop-offs on mobile.</p>
+        <div class="price-grid">
+          <article class="price-card">
+            <div class="price-head">
+              <h3>Laser Tag</h3>
+              <p>Standard sessions for casual visits, repeat games and quick
+                decisions.</p>
+            </div>
+            <div class="price-body">
+              <div class="price-list">
+                <div class="price-row"><span>1 Game</span><strong>£6.95
+                    pp</strong></div>
+                <div class="price-row"><span>2 Games</span><strong>£11.95
+                    pp</strong></div>
+                <div class="price-row"><span>3 Games</span><strong>£14.95
+                    pp</strong></div>
+              </div>
+              <p class="price-note">Exclusive hire: 1 game £130 · 2 games £230 ·
+                3 games £300 for up to 30 players.</p>
+            </div>
+          </article>
+          <article class="price-card">
+            <div class="price-head">
+              <h3>Axe Throwing</h3>
+              <p>Digital Champ Throw pricing by group size.</p>
+            </div>
+            <div class="price-body">
+              <div class="price-list">
+                <div class="price-row"><span>2 Players</span><strong>£24
+                    pp</strong></div>
+                <div class="price-row"><span>3 Players</span><strong>£23
+                    pp</strong></div>
+                <div class="price-row"><span>4 Players</span><strong>£22
+                    pp</strong></div>
+                <div class="price-row"><span>5 Players</span><strong>£21
+                    pp</strong></div>
+                <div class="price-row"><span>6 Players</span><strong>£20
+                    pp</strong></div>
+              </div>
+            </div>
+          </article>
+          <article class="price-card">
+            <div class="price-head">
+              <h3>Parties & Kids Club</h3>
+              <p>Clear launch-friendly offers for birthdays and younger
+                players.</p>
+            </div>
+            <div class="price-body">
+              <div class="price-list">
+                <div class="price-row"><span>Laser Tag Party
+                    Package</span><strong>£16.99 pp</strong></div>
+                <div class="price-row"><span>Kids Club</span><strong>£10
+                    pp</strong></div>
+              </div>
+              <p class="price-note">Party package includes 2 games, private
+                party room and refreshments. Kids Club is 1.5 hours with a
+                minimum of 3 games every Saturday and Sunday at 10:20 AM.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="groups">
+      <div class="container">
+        <div class="eyebrow">Groups, events and celebrations</div>
+        <h2 class="section-title">Built for <span
+            style="color:var(--gold)">birthdays, groups and team
+            days</span></h2>
+        <p class="section-copy">Vault 42 is designed to be easy to understand
+          for first-time visitors and easy to sell for event organisers. You can
+          keep it simple or go bigger with exclusive hire and group
+          sessions.</p>
+        <div class="party-grid">
+          <div class="panel"><div class="panel-inner">
+              <h3 class="display"
+                style="font-size:2rem;letter-spacing:.04em;color:#f4e8af">Perfect
+                for</h3>
+              <div class="split-list">
+                <div class="mini"><h4>Birthday Parties</h4><p>Laser tag party
+                    packages with a private room and refreshments, plus the
+                    right level of energy for kids and teens.</p></div>
+                <div class="mini"><h4>Corporate Team-Building</h4><p>Great for
+                    breaking routine, building energy and getting people
+                    properly involved rather than just standing
+                    around.</p></div>
+                <div class="mini"><h4>Youth Groups & Scouts</h4><p>Mission-led
+                    play that works brilliantly for organised groups and repeat
+                    visits.</p></div>
+                <div class="mini"><h4>SEN-Friendly Sessions</h4><p>A more
+                    considered option for groups that need calmer, more
+                    manageable experiences.</p></div>
+              </div>
+            </div></div>
+          <div class="panel"><div class="panel-inner">
+              <h3 class="display"
+                style="font-size:2rem;letter-spacing:.04em;color:#f4e8af">Why
+                Vault 42?</h3>
+              <div class="why-grid">
+                <div class="why"><b>Immersive world</b><p>Strong theming,
+                    reclaimed HEX Corp identity and a memorable visual
+                    style.</p></div>
+                <div class="why"><b>Real gameplay</b><p>Laserforce Gen 7 and
+                    Champ Throw both deliver proper interactive systems, not
+                    static props.</p></div>
+                <div class="why"><b>Simple booking path</b><p>Clear offers,
+                    visible prices, direct call option and mobile-friendly
+                    action buttons.</p></div>
+                <div class="why"><b>Growth built in</b><p>The escape rooms are
+                    already part of the future story, so the brand can grow
+                    naturally over time.</p></div>
+              </div>
+            </div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="eyebrow">What's planned next</div>
+        <h2 class="section-title">Hexcape escape rooms are <span
+            style="color:var(--gold)">coming later</span></h2>
+        <p class="section-copy">These are part of the long-term Vault 42 vision.
+          They are shown here to build anticipation and help visitors understand
+          where the world is heading, but they are not open at launch.</p>
+        <div class="panel"><div class="panel-inner">
+            <div class="rooms-grid">
+              <div class="room"><h4>The Reactor Room</h4><p>Stabilise the
+                  failing power core before meltdown. Race against time to
+                  restore order.</p><div class="room-meta"><span>60
+                    minutes</span><span>2-6 players</span><span>Difficulty:
+                    ★★★★☆</span></div></div>
+              <div class="room"><h4>The Bio-Dome</h4><p>Navigate a lab overrun
+                  by mutated plants and uncover the secrets behind the
+                  experiment gone wrong.</p><div class="room-meta"><span>60
+                    minutes</span><span>2-6 players</span><span>Difficulty:
+                    ★★★☆☆</span></div></div>
+              <div class="room"><h4>The Command Centre</h4><p>Decrypt the past
+                  and hack the future. Uncover the secrets buried within Vault
+                  42's mainframe.</p><div class="room-meta"><span>60
+                    minutes</span><span>2-6 players</span><span>Difficulty:
+                    ★★★★★</span></div></div>
+            </div>
+          </div></div>
+      </div>
+    </section>
+
+    <section class="section" id="book">
+      <div class="container">
+        <div class="eyebrow">Book now</div>
+        <h2 class="section-title">Ready to <span style="color:var(--gold)">enter
+            the vault?</span></h2>
+        <p class="section-copy">The easiest way to book is online via
+          vault42.uk, or call if you want help choosing the right option for
+          your group.</p>
+        <div class="book-grid">
+          <div class="panel"><div class="panel-inner">
+              <h3 class="display"
+                style="font-size:2rem;letter-spacing:.04em;color:#f4e8af">Fastest
+                booking actions</h3>
+              <div class="action-grid">
+                <div class="action"><div><strong>Book online</strong><span>Go
+                      straight to the live booking flow on
+                      vault42.uk</span></div><a class="btn-primary"
+                    href="https://vault42.uk">Open Site</a></div>
+                <div class="action"><div><strong>Call now</strong><span>Ask
+                      about parties, groups, launch availability or the best
+                      fit</span></div><a class="btn-secondary"
+                    href="tel:02476954242">02476 954242</a></div>
+                <div class="action"><div><strong>Escape room
+                      interest</strong><span>Ask about the future Hexcape phase
+                      and launch updates</span></div><a class="btn-secondary"
+                    href="https://vault42.uk">Register Interest</a></div>
+              </div>
+              <div class="cta-band"><strong>Launch-ready message</strong><p>Book
+                  laser tag and axe throwing now. Keep escape rooms as a future
+                  promise, not a launch-day confusion point.</p></div>
+            </div></div>
+          <div class="panel"><div class="panel-inner">
+              <h3 class="display"
+                style="font-size:2rem;letter-spacing:.04em;color:#f4e8af">Contact
+                & location</h3>
+              <div class="contact-list">
+                <div class="contact-item"><b>Phone</b><a
+                    href="tel:02476954242">02476 954242</a></div>
+                <div class="contact-item"><b>Website</b><a
+                    href="https://vault42.uk">vault42.uk</a></div>
+                <div class="contact-item"><b>Address</b><div>Vault 42 Unit 1 -
+                    2, Closers Business Centre, Avenue Road, Avenue Road,
+                    Nuneaton, CV11 4ND</div></div>
+                <div class="contact-item"><b>Trade mark</b><div>Vault 42® is a
+                    registered trade mark of Hex Box Limited</div></div>
+              </div>
+            </div></div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <div class="eyebrow">Vault 42</div>
+            <p>Vault 42 brings Hexforce Laser Tag and augmented axe throwing
+              together inside one strong post-apocalyptic world, with Hexcape
+              escape rooms planned for a later phase.</p>
+          </div>
+          <div>
+            <div class="footer-title">Navigate</div>
+            <div class="footer-links">
+              <a href="#experiences">Experiences</a>
+              <a href="#pricing">Pricing</a>
+              <a href="#groups">Groups</a>
+              <a href="#book">Book</a>
+            </div>
+          </div>
+          <div>
+            <div class="footer-title">Contact</div>
+            <div class="footer-links">
+              <a href="tel:02476954242">02476 954242</a>
+              <a href="https://vault42.uk">vault42.uk</a>
+              <div>Nuneaton</div>
+            </div>
+          </div>
+        </div>
+        <div class="copyright">Vault 42® is a registered trade mark of Hex Box
+          Limited · One-page launch site · Mobile-first rework</div>
+      </div>
+    </footer>
+
+    <div class="sticky-mobile">
+      <div class="sticky-grid">
+        <a href="#pricing" class="sticky-btn">See Pricing</a>
+        <a href="#book" class="btn-secondary" style="min-height:50px">Book
+          Now</a>
+      </div>
+    </div>
+  </body>
+</html>

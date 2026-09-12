@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" fill="none">
+<rect x="20" y="20" width="1560" height="860" stroke="#f8b500" stroke-opacity=".18" stroke-width="2"/>
+<path d="M90 20h220l18 18M1510 20h-220l-18 18M20 90v180l18 18M20 810v-180l18-18M1580 90v180l-18 18M1580 810v-180l-18-18M90 880h220l18-18M1510 880h-220l-18-18" stroke="#f8b500" stroke-opacity=".28" stroke-width="3"/>
+<path d="M130 110h420M1050 110h420M130 790h260M1210 790h260" stroke="#f8b500" stroke-opacity=".14"/>
+<path d="M200 160h50M1350 730h50M1420 160h70M240 730h70" stroke="#f8b500" stroke-opacity=".20" stroke-width="2"/>
+</svg>

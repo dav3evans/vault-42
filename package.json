@@ -1,0 +1,19 @@
+{
+  "name": "vault-42",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=web",
+    "build": "npm run build --workspace=web",
+    "storybook": "npm run storybook --workspace=@vault42/ui",
+    "build-storybook": "npm run build-storybook --workspace=@vault42/ui"
+  },
+  "devDependencies": {
+    "@storybook/react-vite": "^10.6.0",
+    "@tailwindcss/vite": "^4.3.3",
+    "vite": "^8.3.0"
+  }
+}

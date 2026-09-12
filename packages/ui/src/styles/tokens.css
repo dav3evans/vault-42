@@ -1,0 +1,63 @@
+@import "tailwindcss";
+
+/**
+ * Vault 42 design tokens.
+ * Ported from the original design reference (see /design/reference).
+ * Consuming apps can override --font-* here with next/font variables
+ * before this file is imported, since @theme values are just CSS vars.
+ */
+@theme {
+  /* Surfaces */
+  --color-bg: #071018;
+  --color-bg-2: #0d1822;
+  --color-panel: #112130;
+  --color-panel-2: #0d1b29;
+  --color-line: rgb(83 129 159 / 0.18);
+
+  /* Text */
+  --color-text: #e8e0cc;
+  --color-muted: #b9c6d4;
+  --color-muted-2: #91a4b9;
+
+  /* Brand accents */
+  --color-gold: #fecf18;
+  --color-gold-2: #d8aa00;
+  --color-gold-3: #ffdd5b;
+  --color-green: #79a05b;
+
+  /* Type */
+  --font-display: "Bebas Neue", sans-serif;
+  --font-sans: "Barlow", sans-serif;
+  --font-condensed: "Barlow Condensed", sans-serif;
+  --font-mono: "Share Tech Mono", monospace;
+
+  /* Shape */
+  --radius-panel: 22px;
+
+  /* Layout */
+  --container-max: 1240px;
+
+  /* Decorative gradients */
+  --background-image-warn: repeating-linear-gradient(
+    -55deg,
+    var(--color-gold) 0,
+    var(--color-gold) 16px,
+    var(--color-bg) 16px,
+    var(--color-bg) 32px
+  );
+  --background-image-gold-fade: linear-gradient(
+    180deg,
+    var(--color-gold-3),
+    var(--color-gold)
+  );
+  --background-image-panel-fade: linear-gradient(
+    180deg,
+    rgb(14 26 38 / 0.9),
+    rgb(9 18 26 / 0.96)
+  );
+}
+
+/* Shared, non-utility primitives that are awkward to express as Tailwind utilities alone. */
+@utility clip-vault {
+  clip-path: polygon(9px 0%, 100% 0%, calc(100% - 9px) 100%, 0% 100%);
+}

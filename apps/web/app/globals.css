@@ -1,0 +1,10 @@
+@import "@vault42/ui/tokens.css";
+@source "../../../packages/ui/src";
+
+/* Point the shared design tokens at Next's self-hosted, optimized fonts. */
+@theme {
+  --font-display: var(--font-bebas-neue), sans-serif;
+  --font-sans: var(--font-barlow), sans-serif;
+  --font-condensed: var(--font-barlow-condensed), sans-serif;
+  --font-mono: var(--font-share-tech-mono), monospace;
+}
