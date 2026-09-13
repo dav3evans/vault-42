@@ -73,7 +73,7 @@ export function Hero({
           : undefined
       }
     >
-      <div className="relative z-[2] mx-auto grid max-w-(--container-max) grid-cols-1 items-end gap-8 px-3.5 pt-8 lg:grid-cols-[1.08fr_0.92fr]">
+      <div className="relative z-[2] mx-auto grid max-w-(--container-max) grid-cols-1 items-start gap-8 px-3.5 pt-8 lg:grid-cols-[1.08fr_0.92fr]">
         <div className="pt-5">
           <Eyebrow>{eyebrow}</Eyebrow>
           <Heading as="h1" size="hero">
