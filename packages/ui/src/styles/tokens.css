@@ -56,6 +56,19 @@
 
   /* Motion */
   --animate-marquee: marquee 28s linear infinite;
+
+  /*
+   * Vault door overlay. Durations here must stay in sync with the phase
+   * timings in organisms/VaultDoors/VaultDoors.tsx (BOOT_MS / OPEN_MS / EXIT_MS).
+   * Each door sets --door-dir (-1 left, 1 right) so one set of keyframes
+   * drives both halves; 100% translateX = the door's own width.
+   */
+  --animate-door-open: door-open 2.6s cubic-bezier(0.65, 0.05, 0.3, 1) forwards;
+  --animate-door-strain: door-strain 2.1s ease-in-out infinite;
+  --animate-door-give: door-give 0.7s cubic-bezier(0.55, 0, 1, 0.45) forwards;
+  --animate-door-jolt: door-jolt 0.32s linear;
+  --animate-door-slam: door-slam 0.9s cubic-bezier(0.6, 0, 0.8, 0.6) forwards;
+  --animate-door-slam-jolt: door-slam-jolt 0.9s linear;
 }
 
 @keyframes marquee {
@@ -64,6 +77,153 @@
   }
   to {
     transform: translateX(-50%);
+  }
+}
+
+/* Doors part confidently, slow, strain past the sticking point, slip, and
+   settle jammed at 42% of their travel (of course it's 42%). */
+@keyframes door-open {
+  0% {
+    transform: translateX(0);
+  }
+  6% {
+    transform: translateX(calc(var(--door-dir, 1) * -0.75%));
+  }
+  10% {
+    transform: translateX(0);
+  }
+  55% {
+    transform: translateX(calc(var(--door-dir, 1) * 34%));
+  }
+  70% {
+    transform: translateX(calc(var(--door-dir, 1) * 41%));
+  }
+  78% {
+    transform: translateX(calc(var(--door-dir, 1) * 43.5%));
+  }
+  84% {
+    transform: translateX(calc(var(--door-dir, 1) * 40.5%));
+  }
+  90% {
+    transform: translateX(calc(var(--door-dir, 1) * 42.6%));
+  }
+  95% {
+    transform: translateX(calc(var(--door-dir, 1) * 41.6%));
+  }
+  100% {
+    transform: translateX(calc(var(--door-dir, 1) * 42%));
+  }
+}
+
+/* Jammed: small shivers, one big push that gives way, then back to 42%. */
+@keyframes door-strain {
+  0%,
+  46%,
+  100% {
+    transform: translateX(calc(var(--door-dir, 1) * 42%));
+  }
+  12% {
+    transform: translateX(calc(var(--door-dir, 1) * 42.4%));
+  }
+  16% {
+    transform: translateX(calc(var(--door-dir, 1) * 41.8%));
+  }
+  20% {
+    transform: translateX(calc(var(--door-dir, 1) * 42.1%));
+  }
+  58% {
+    transform: translateX(calc(var(--door-dir, 1) * 43.2%));
+  }
+  64% {
+    transform: translateX(calc(var(--door-dir, 1) * 41.5%));
+  }
+  68% {
+    transform: translateX(calc(var(--door-dir, 1) * 42.2%));
+  }
+  72% {
+    transform: translateX(calc(var(--door-dir, 1) * 41.9%));
+  }
+}
+
+/* The exit: a short recoil, then the door finally flings clear. */
+@keyframes door-give {
+  0% {
+    transform: translateX(calc(var(--door-dir, 1) * 42%));
+  }
+  18% {
+    transform: translateX(calc(var(--door-dir, 1) * 40%));
+  }
+  100% {
+    transform: translateX(calc(var(--door-dir, 1) * 104%));
+  }
+}
+
+/* Access denied: a short wind-up, then the doors slam back shut and bounce. */
+@keyframes door-slam {
+  0% {
+    transform: translateX(calc(var(--door-dir, 1) * 42%));
+  }
+  12% {
+    transform: translateX(calc(var(--door-dir, 1) * 44%));
+  }
+  55% {
+    transform: translateX(0);
+  }
+  70% {
+    transform: translateX(calc(var(--door-dir, 1) * 1.4%));
+  }
+  82% {
+    transform: translateX(0);
+  }
+  90% {
+    transform: translateX(calc(var(--door-dir, 1) * 0.4%));
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* Frame shake timed to the door-slam impact (flat until ~55%, then shake). */
+@keyframes door-slam-jolt {
+  0%,
+  52%,
+  100% {
+    transform: translate(0, 0);
+  }
+  58% {
+    transform: translate(2px, -3px);
+  }
+  66% {
+    transform: translate(-3px, 2px);
+  }
+  74% {
+    transform: translate(3px, 2px);
+  }
+  82% {
+    transform: translate(-2px, -1px);
+  }
+  90% {
+    transform: translate(1px, 1px);
+  }
+}
+
+/* Full-frame shake at the moment the mechanism jams. */
+@keyframes door-jolt {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  20% {
+    transform: translate(1px, -2px);
+  }
+  40% {
+    transform: translate(-2px, 1px);
+  }
+  60% {
+    transform: translate(2px, 2px);
+  }
+  80% {
+    transform: translate(-1px, -1px);
   }
 }
 

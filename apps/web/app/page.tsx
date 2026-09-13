@@ -13,11 +13,14 @@ import {
   Callout,
   Heading,
   Accent,
+  VaultDoors,
 } from "@vault42/ui";
 
 export default function Home() {
   return (
     <>
+      {/* Fake loading screen: the blast doors jam at 42%, then slam shut — access denied. */}
+      <VaultDoors duration={7000} resolution="slam" logoSrc="/brand/logo.webp" />
       <Hero
         eyebrow="Nuneaton's immersive adventure destination"
         headingLead="STEP INTO"

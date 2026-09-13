@@ -34,3 +34,4 @@ export * from "./components/organisms/StickyMobileBar/StickyMobileBar";
 export * from "./components/organisms/PageHeader/PageHeader";
 export * from "./components/organisms/FaqAccordion/FaqAccordion";
 export * from "./components/organisms/InquiryForm/InquiryForm";
+export * from "./components/organisms/VaultDoors/VaultDoors";
