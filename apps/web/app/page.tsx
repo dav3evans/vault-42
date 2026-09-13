@@ -1,3 +1,4 @@
+import Image from "next/image";
 import {
   Hero,
   Marquee,
@@ -24,6 +25,7 @@ export default function Home() {
         headingOutline="AND SURVIVE"
         lead="A lost HEX Corp sanctuary. Reclaimed by nature. Still alive. Battle through Laserforce combat, test your nerve in augmented axe throwing, and get ready for the next phase of the vault."
         sub="Vault 42 blends post-apocalyptic worldbuilding, competitive gameplay and proper event energy into one cinematic destination for families, friends, parties, corporate groups and young explorers."
+        backgroundImage="url('/brand/hero-wasteland.webp')"
         actions={[
           { label: "Book Your Adventure", href: "/pricing" },
           { label: "See Pricing", href: "/pricing", variant: "secondary" },
@@ -36,6 +38,17 @@ export default function Home() {
         card={{
           statusLabel: "Facility Status",
           statusNote: "Systems Active",
+          logo: (
+            <div className="relative mx-auto aspect-4/3 w-full max-w-[220px]">
+              <Image
+                src="/brand/logo.webp"
+                alt="Vault 42 logo with reclaimed vines"
+                fill
+                sizes="220px"
+                className="object-contain drop-shadow-[0_14px_28px_rgba(0,0,0,0.42)]"
+              />
+            </div>
+          ),
           items: [
             { label: "Book now", text: "Hexforce Laser Tag and augmented axe throwing are the live launch experiences." },
             { label: "Coming later", text: "Hexcape Escape Rooms are planned for a later phase." },
@@ -85,6 +98,15 @@ export default function Home() {
           { number: "02", text: "Clear future story: escape rooms are shown honestly as planned later." },
           { number: "03", text: "Mobile-first layout: clear actions, visible pricing, sticky booking buttons." },
         ]}
+        media={
+          <Image
+            src="/brand/guide-vine-lights.webp"
+            alt=""
+            fill
+            sizes="(min-width: 1024px) 430px, 100vw"
+            className="object-cover"
+          />
+        }
       />
 
       <section className="mx-auto max-w-(--container-max) px-3.5 py-[86px]" id="experiences">

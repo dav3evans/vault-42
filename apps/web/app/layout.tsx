@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { Bebas_Neue, Barlow, Barlow_Condensed, Share_Tech_Mono } from "next/font/google";
 import { Header, Footer, StickyMobileBar } from "@vault42/ui";
 import { primaryNav, footerColumns } from "@/lib/site-nav";
@@ -44,7 +45,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${bebasNeue.variable} ${barlow.variable} ${barlowCondensed.variable} ${shareTechMono.variable}`}
     >
       <body className="bg-bg font-sans text-text">
-        <Header brandTitle="VAULT 42" brandSubtitle="A Division of Hex Corp" links={primaryNav} bookHref="/pricing" />
+        <Header
+          brandTitle="VAULT 42"
+          brandSubtitle="A Division of Hex Corp"
+          links={primaryNav}
+          bookHref="/pricing"
+          logo={<Image src="/brand/logo.webp" alt="Vault 42 logo" fill sizes="56px" className="object-contain" priority />}
+        />
         {children}
         <Footer
           eyebrow="Vault 42"

@@ -13,7 +13,7 @@ export type BrandProps = {
 export function Brand({ title, subtitle, logo, href = "#", className }: BrandProps) {
   return (
     <a href={href} className={cn("flex min-w-0 items-center gap-3", className)} aria-label={title}>
-      <span className="flex h-14 w-14 flex-none items-center justify-center overflow-hidden drop-shadow-[0_10px_18px_rgba(0,0,0,0.38)]">
+      <span className="relative flex h-14 w-14 flex-none items-center justify-center overflow-hidden drop-shadow-[0_10px_18px_rgba(0,0,0,0.38)]">
         {logo ?? (
           <span className="flex h-full w-full items-center justify-center rounded-full border border-gold/30 bg-bg-2 font-display text-lg text-gold">
             {title.charAt(0)}

@@ -15,10 +15,20 @@ export type HeaderProps = {
   logo?: ReactNode;
   links: HeaderNavItem[];
   bookHref?: string;
+  /** Where the brand mark links to. Defaults to "/" — the old one-page design used "#top", which no longer makes sense across multiple routes. */
+  homeHref?: string;
   className?: string;
 };
 
-export function Header({ brandTitle, brandSubtitle, logo, links, bookHref = "#book", className }: HeaderProps) {
+export function Header({
+  brandTitle,
+  brandSubtitle,
+  logo,
+  links,
+  bookHref = "#book",
+  homeHref = "/",
+  className,
+}: HeaderProps) {
   return (
     <header
       className={cn(
@@ -27,7 +37,7 @@ export function Header({ brandTitle, brandSubtitle, logo, links, bookHref = "#bo
       )}
     >
       <div className="mx-auto flex max-w-(--container-max) flex-col items-start gap-3 px-3.5 py-2.5 max-[760px]:items-start min-[760px]:min-h-[74px] min-[760px]:flex-row min-[760px]:items-center min-[760px]:justify-between">
-        <Brand title={brandTitle} subtitle={brandSubtitle} logo={logo} href="#top" />
+        <Brand title={brandTitle} subtitle={brandSubtitle} logo={logo} href={homeHref} />
         {/* Below 520px the sticky mobile bar takes over booking, so the full nav (including Book Now) hides here. */}
         <nav
           aria-label="Primary navigation"
