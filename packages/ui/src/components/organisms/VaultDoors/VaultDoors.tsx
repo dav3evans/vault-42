@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { StatusPill, type StatusPillTone } from "../../atoms/StatusPill/StatusPill";
+import { ConsoleMoss, DoorMoss, LogoVines, Overgrowth } from "./VaultDoorsFoliage";
 import { cn } from "../../../lib/cn";
 
 export type VaultDoorsResolution = "give-way" | "fade" | "slam" | "jammed";
@@ -46,6 +47,12 @@ export type VaultDoorsProps = {
   logoSrc?: string;
   /** Rendered logo width in px (capped to 38vw on small screens). */
   logoWidth?: number;
+  /**
+   * Nature has been reclaiming the facility: vines hanging from the top of
+   * the window and the logo plaque, creepers from the sides, moss on the
+   * doors and console. On by default; pass false for a freshly-built vault.
+   */
+  overgrown?: boolean;
   className?: string;
 };
 
@@ -179,6 +186,7 @@ export function VaultDoors({
   backdrop,
   logoSrc,
   logoWidth = 360,
+  overgrown = true,
   className,
 }: VaultDoorsProps) {
   const resolvedBackdrop = backdrop ?? (resolution === "jammed" ? "transparent" : "void");
@@ -356,8 +364,8 @@ export function VaultDoors({
         )}
 
         {/* Door halves. */}
-        <Door side="left" animation={doorAnimation} style={doorStyle(-1)} numeral={logoSrc ? undefined : "4"} />
-        <Door side="right" animation={doorAnimation} style={doorStyle(1)} numeral={logoSrc ? undefined : "2"} />
+        <Door side="left" animation={doorAnimation} style={doorStyle(-1)} numeral={logoSrc ? undefined : "4"} mossy={overgrown} />
+        <Door side="right" animation={doorAnimation} style={doorStyle(1)} numeral={logoSrc ? undefined : "2"} mossy={overgrown} />
 
         {/* The logo plaque, bolted to the right door. It lives outside the
             door div (which would clip it into the teeth) on a sibling layer
@@ -367,6 +375,8 @@ export function VaultDoors({
             className={cn("pointer-events-none absolute inset-y-0 right-0", doorAnimation)}
             style={{ ...doorStyle(1), width: `calc(50% + ${TOOTH_DEPTH_PX / 2}px)` }}
           >
+            {/* Behind the plaque, so the vines read as hanging from it. */}
+            {overgrown && <LogoVines width={`min(${logoWidth}px, 52vw)`} />}
             <img
               src={logoSrc}
               alt=""
@@ -389,8 +399,12 @@ export function VaultDoors({
         <div className="absolute inset-x-0 top-0 h-2.5 border-b border-line bg-[#050b11] bg-[repeating-linear-gradient(90deg,rgb(232_224_204/0.08)_0_2px,transparent_2px_24px)]" />
         <div className="absolute inset-x-0 bottom-0 h-2.5 border-t border-line bg-[#050b11] bg-[repeating-linear-gradient(90deg,rgb(232_224_204/0.08)_0_2px,transparent_2px_24px)]" />
 
+        {/* Overgrowth pinned to the frame — the doors slide beneath it. */}
+        {overgrown && <Overgrowth />}
+
         {/* Control console. */}
         <div className="absolute bottom-[9vh] left-1/2 w-[min(92vw,520px)] -translate-x-1/2">
+          {overgrown && <ConsoleMoss />}
           <div className="clip-vault border border-gold/12 bg-panel-fade px-6 py-5 shadow-[0_26px_60px_rgb(0_0_0/0.5)]">
             <div className="flex items-center justify-between gap-3 border-b border-gold/10 pb-3">
               <span className="font-mono text-[0.6rem] uppercase tracking-[0.26em] text-gold">
@@ -433,11 +447,13 @@ function Door({
   animation,
   style,
   numeral,
+  mossy,
 }: {
   side: "left" | "right";
   animation?: string;
   style: React.CSSProperties;
   numeral?: string;
+  mossy?: boolean;
 }) {
   const left = side === "left";
   return (
@@ -557,6 +573,7 @@ function Door({
           }}
         />
       </div>
+      {mossy && <DoorMoss side={side} />}
       {/* Manufacturer plate. */}
       <span
         className={cn(
