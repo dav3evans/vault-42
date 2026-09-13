@@ -18,6 +18,9 @@ export * from "./components/molecules/ContactItem/ContactItem";
 export * from "./components/molecules/ActionRow/ActionRow";
 export * from "./components/molecules/FooterLinkGroup/FooterLinkGroup";
 export * from "./components/molecules/Callout/Callout";
+export * from "./components/molecules/BlogPostCard/BlogPostCard";
+export * from "./components/molecules/JobListingCard/JobListingCard";
+export * from "./components/molecules/TestimonialCard/TestimonialCard";
 
 export * from "./components/organisms/CtaCard/CtaCard";
 export * from "./components/organisms/PriceCard/PriceCard";
@@ -28,3 +31,6 @@ export * from "./components/organisms/TileGridPanel/TileGridPanel";
 export * from "./components/organisms/StoryTeaser/StoryTeaser";
 export * from "./components/organisms/Footer/Footer";
 export * from "./components/organisms/StickyMobileBar/StickyMobileBar";
+export * from "./components/organisms/PageHeader/PageHeader";
+export * from "./components/organisms/FaqAccordion/FaqAccordion";
+export * from "./components/organisms/InquiryForm/InquiryForm";

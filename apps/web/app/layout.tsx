@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Bebas_Neue, Barlow, Barlow_Condensed, Share_Tech_Mono } from "next/font/google";
+import { Header, Footer, StickyMobileBar } from "@vault42/ui";
+import { primaryNav, footerColumns } from "@/lib/site-nav";
 import "./globals.css";
 
 const bebasNeue = Bebas_Neue({
@@ -27,8 +29,12 @@ const shareTechMono = Share_Tech_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Vault 42",
-  description: "Vault 42 — component library integration preview.",
+  title: {
+    default: "Vault 42 | Laser Tag & Axe Throwing in Nuneaton",
+    template: "%s | Vault 42",
+  },
+  description:
+    "Step into Vault 42 in Nuneaton for Hexforce Laser Tag and augmented axe throwing inside a reclaimed HEX Corp world.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -37,7 +43,17 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${bebasNeue.variable} ${barlow.variable} ${barlowCondensed.variable} ${shareTechMono.variable}`}
     >
-      <body className="bg-bg font-sans text-text">{children}</body>
+      <body className="bg-bg font-sans text-text">
+        <Header brandTitle="VAULT 42" brandSubtitle="A Division of Hex Corp" links={primaryNav} bookHref="/pricing" />
+        {children}
+        <Footer
+          eyebrow="Vault 42"
+          blurb="Vault 42 brings Hexforce Laser Tag and augmented axe throwing together inside one strong post-apocalyptic world, with Hexcape escape rooms planned for a later phase."
+          columns={footerColumns}
+          copyright="Vault 42® is a registered trade mark of Hex Box Limited"
+        />
+        <StickyMobileBar primary={{ label: "See Pricing", href: "/pricing" }} secondary={{ label: "Contact", href: "/contact" }} />
+      </body>
     </html>
   );
 }
