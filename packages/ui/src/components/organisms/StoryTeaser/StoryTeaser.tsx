@@ -37,7 +37,7 @@ export function StoryTeaser({ eyebrow, heading, description, steps, media, class
             ))}
           </div>
         </div>
-        <div className="relative min-h-[420px] overflow-hidden rounded-[22px] border border-white/5 bg-gradient-to-b from-black/[0.14] to-black/[0.46] shadow-[0_20px_50px_rgba(0,0,0,0.3)]">
+        <div className="relative min-h-[420px] overflow-hidden border border-white/5 bg-gradient-to-b from-black/[0.14] to-black/[0.46] shadow-[0_20px_50px_rgba(0,0,0,0.3)]">
           {media}
         </div>
       </div>

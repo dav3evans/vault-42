@@ -24,15 +24,13 @@
   --color-gold-2: #d8aa00;
   --color-gold-3: #ffdd5b;
   --color-green: #79a05b;
+  --color-red: #ff5c57;
 
   /* Type */
   --font-display: "Bebas Neue", sans-serif;
   --font-sans: "Barlow", sans-serif;
   --font-condensed: "Barlow Condensed", sans-serif;
   --font-mono: "Share Tech Mono", monospace;
-
-  /* Shape */
-  --radius-panel: 22px;
 
   /* Layout */
   --container-max: 1240px;

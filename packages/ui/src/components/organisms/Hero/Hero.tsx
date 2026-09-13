@@ -3,7 +3,7 @@ import { Eyebrow } from "../../atoms/Eyebrow/Eyebrow";
 import { Heading } from "../../atoms/Heading/Heading";
 import { Accent } from "../../atoms/Accent/Accent";
 import { OutlineText } from "../../atoms/OutlineText/OutlineText";
-import { StatusPill } from "../../atoms/StatusPill/StatusPill";
+import { StatusPill, type StatusPillTone } from "../../atoms/StatusPill/StatusPill";
 import { Button } from "../../atoms/Button/Button";
 import { StatBlock } from "../../molecules/StatBlock/StatBlock";
 import { cn } from "../../../lib/cn";
@@ -27,6 +27,7 @@ export type HeroCardItem = {
 export type HeroCard = {
   statusLabel?: string;
   statusNote?: string;
+  statusTone?: StatusPillTone;
   logo?: ReactNode;
   items?: HeroCardItem[];
   chipActions?: HeroAction[];
@@ -101,7 +102,7 @@ export function Hero({
         {card && (
           <aside
             aria-label="At a glance"
-            className="relative w-full max-w-[430px] justify-self-start overflow-hidden rounded-[18px] border border-gold/12 bg-gradient-to-b from-[rgba(10,20,30,0.86)] to-[rgba(8,15,22,0.92)] shadow-[0_26px_60px_rgba(0,0,0,0.38)] lg:justify-self-end"
+            className="relative w-full max-w-[430px] justify-self-start overflow-hidden border border-gold/12 bg-gradient-to-b from-[rgba(10,20,30,0.86)] to-[rgba(8,15,22,0.92)] shadow-[0_26px_60px_rgba(0,0,0,0.38)] lg:justify-self-end"
           >
             {(card.statusLabel || card.statusNote) && (
               <div className="flex items-center justify-between gap-3.5 border-b border-gold/10 px-5 py-4">
@@ -110,7 +111,7 @@ export function Hero({
                     {card.statusLabel}
                   </span>
                 )}
-                {card.statusNote && <StatusPill label={card.statusNote} />}
+                {card.statusNote && <StatusPill label={card.statusNote} tone={card.statusTone} />}
               </div>
             )}
             {card.logo && <div className="px-6 pt-6 pb-3.5">{card.logo}</div>}

@@ -37,7 +37,8 @@ export default function Home() {
         ]}
         card={{
           statusLabel: "Facility Status",
-          statusNote: "Systems Active",
+          statusNote: "Critical Failure",
+          statusTone: "critical",
           logo: (
             <div className="relative mx-auto aspect-4/3 w-full max-w-[220px]">
               <Image

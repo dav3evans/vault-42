@@ -12,7 +12,7 @@ export function Callout({ title, children, className }: CalloutProps) {
   return (
     <div
       className={cn(
-        "mt-6 rounded-[18px] border border-gold/16 bg-gradient-to-b from-gold/12 to-gold/[0.03] px-[22px] py-5",
+        "mt-6 border border-gold/16 bg-gradient-to-b from-gold/12 to-gold/[0.03] px-[22px] py-5",
         className,
       )}
     >

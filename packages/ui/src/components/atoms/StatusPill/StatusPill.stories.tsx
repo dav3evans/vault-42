@@ -5,7 +5,7 @@ const meta: Meta<typeof StatusPill> = {
   title: "Atoms/StatusPill",
   component: StatusPill,
   args: { label: "Systems Active" },
-  argTypes: { tone: { control: "select", options: ["active", "idle"] } },
+  argTypes: { tone: { control: "select", options: ["active", "idle", "critical"] } },
 };
 
 export default meta;
@@ -15,4 +15,8 @@ export const Active: Story = {};
 
 export const Idle: Story = {
   args: { tone: "idle", label: "Offline" },
+};
+
+export const Critical: Story = {
+  args: { tone: "critical", label: "Critical Failure" },
 };

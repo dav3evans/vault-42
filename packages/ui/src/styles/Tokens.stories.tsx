@@ -12,12 +12,13 @@ const colors = [
   { name: "gold-2", className: "bg-gold-2", cssVar: "--color-gold-2" },
   { name: "gold-3", className: "bg-gold-3", cssVar: "--color-gold-3" },
   { name: "green", className: "bg-green", cssVar: "--color-green" },
+  { name: "red", className: "bg-red", cssVar: "--color-red" },
 ];
 
 function ColorSwatch({ name, className, cssVar }: { name: string; className: string; cssVar: string }) {
   return (
     <div className="flex items-center gap-4">
-      <div className={`h-12 w-12 shrink-0 rounded-lg border border-white/10 ${className}`} />
+      <div className={`h-12 w-12 shrink-0 border border-white/10 ${className}`} />
       <div>
         <div className="font-sans text-sm text-text">{name}</div>
         <div className="font-mono text-xs text-muted-2">{cssVar}</div>
@@ -64,8 +65,8 @@ function TokensPreview() {
         <h2 className="mb-5 font-display text-3xl tracking-[0.03em] text-text">Shape</h2>
         <div className="flex flex-wrap items-center gap-6">
           <div className="grid gap-2">
-            <div className="rounded-panel h-16 w-28 border border-line bg-panel-fade" />
-            <span className="font-mono text-xs text-muted-2">--radius-panel (22px)</span>
+            <div className="h-16 w-28 border border-line bg-panel-fade" />
+            <span className="font-mono text-xs text-muted-2">Sharp corners — no radius anywhere</span>
           </div>
           <div className="grid gap-2">
             <div className="clip-vault h-16 w-28 bg-gold-fade" />

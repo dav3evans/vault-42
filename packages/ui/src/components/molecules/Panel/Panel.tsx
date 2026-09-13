@@ -13,7 +13,7 @@ export function Panel({ children, accentTop = true, className, innerClassName }:
   return (
     <div
       className={cn(
-        "relative overflow-hidden rounded-panel border border-line bg-panel-fade shadow-[0_16px_40px_rgba(0,0,0,0.24)]",
+        "relative overflow-hidden border border-line bg-panel-fade shadow-[0_16px_40px_rgba(0,0,0,0.24)]",
         className,
       )}
     >
