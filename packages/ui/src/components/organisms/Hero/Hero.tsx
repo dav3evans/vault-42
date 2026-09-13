@@ -62,7 +62,7 @@ export function Hero({
 }: HeroProps) {
   return (
     <section
-      className={cn("relative overflow-hidden bg-bg py-9", className)}
+      className={cn("relative min-h-[100svh] overflow-hidden bg-bg pt-[34px] pb-[70px]", className)}
       style={
         backgroundImage
           ? {
