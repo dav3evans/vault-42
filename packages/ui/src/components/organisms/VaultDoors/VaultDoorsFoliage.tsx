@@ -15,9 +15,10 @@ const MOSS_DEEP = "#26351a";
 const MOSS = "#3d5326";
 const MOSS_LIGHT = "#567a33";
 /* "G" is a sentinel resolved to the per-instance leaf gradient at render. */
-const LEAF_TONES = ["#3b5528", "#49682e", "#578038", "#659647", "#79a05b", "G", "G", "G"];
+const LEAF_TONES = ["#3b5528", "#49682e", "#578038", "#659647", "#79a05b", "#6b5a33", "G", "G", "G"];
 const LEAF_YELLOW = "#99973f";
 const LEAF_DEAD = "#7c6636";
+const LEAF_RUST = "#8a6a38";
 
 type Pt = { x: number; y: number };
 type LeafSpec = { x: number; y: number; a: number; s: number; sy: number; tone: string };
@@ -47,8 +48,9 @@ const f = (n: number) => Math.round(n * 10) / 10;
 
 function pickTone(rng: () => number): string {
   const r = rng();
-  if (r < 0.05) return LEAF_DEAD;
-  if (r < 0.13) return LEAF_YELLOW;
+  if (r < 0.07) return LEAF_DEAD;
+  if (r < 0.12) return LEAF_RUST;
+  if (r < 0.2) return LEAF_YELLOW;
   return LEAF_TONES[Math.floor(rng() * LEAF_TONES.length)] ?? STEM;
 }
 
@@ -98,11 +100,12 @@ function leavesAlong(
   angs: number[],
   size: number,
   from: number,
+  skip = 0.22,
 ): LeafSpec[] {
   const leaves: LeafSpec[] = [];
   let side = rng() < 0.5 ? 1 : -1;
   for (let i = from; i < pts.length - 1; i++) {
-    if (rng() < 0.22) continue;
+    if (rng() < skip) continue;
     side = -side;
     const p = pts[i]!;
     const tangent = angs[i]!;
@@ -141,42 +144,43 @@ function genVine(
     len: number;
     curl?: number;
     pull?: number;
+    /** Heading the stem is pulled toward — straight down unless it's a creeper. */
+    target?: number;
     size?: number;
     thin?: boolean;
-    /** Rosette of large leaves at the anchor, where growth is thickest. */
-    crown?: boolean;
+    /** Chance per step of throwing a side branch (creepers fork more). */
+    branchy?: number;
+    /** Sparser, smaller leaves — spidery creeper growth. */
+    sparse?: boolean;
   },
 ): Vine {
-  const { angle, len, curl = 0.55, pull = 0.12, size = 11, thin = false, crown = false } = opts;
-  const { pts, angs } = walk(rng, { x: 0, y: 0 }, angle, Math.PI / 2, len, curl, pull);
-  const leaves = leavesAlong(rng, pts, angs, size, 2);
-  if (crown) {
-    const n = 5 + Math.floor(rng() * 4);
-    for (let k = 0; k < n; k++) {
-      leaves.push({
-        x: (rng() - 0.5) * 16,
-        y: rng() * 8,
-        a: 25 + (k / (n - 1)) * 130 + (rng() - 0.5) * 24,
-        s: (size * (1.5 + rng() * 0.9)) / 10,
-        sy: 0.9 + rng() * 0.3,
-        tone: pickTone(rng),
-      });
-    }
-  }
+  const {
+    angle,
+    len,
+    curl = 0.55,
+    pull = 0.12,
+    target = Math.PI / 2,
+    size = 11,
+    thin = false,
+    branchy = 0.14,
+    sparse = false,
+  } = opts;
+  const { pts, angs } = walk(rng, { x: 0, y: 0 }, angle, target, len, curl, pull);
+  const leaves = leavesAlong(rng, pts, angs, size, 2, sparse ? 0.48 : 0.22);
   const branches: string[] = [];
   for (let i = 3; i < pts.length - 3; i++) {
-    if (rng() < 0.14) {
+    if (rng() < branchy) {
       const b = walk(
         rng,
         pts[i]!,
         angs[i]! + (rng() < 0.5 ? -0.9 : 0.9),
-        Math.PI / 2,
+        target,
         len * 0.35,
         0.7,
-        0.16,
+        sparse ? 0.06 : 0.16,
       );
       branches.push(smoothPath(b.pts));
-      leaves.push(...leavesAlong(rng, b.pts, b.angs, size * 0.8, 1));
+      leaves.push(...leavesAlong(rng, b.pts, b.angs, size * 0.8, 1, sparse ? 0.55 : 0.22));
     }
   }
   /* Some vines end in a bare, curling tendril. */
@@ -361,54 +365,131 @@ const DOWN = Math.PI / 2;
 
 function buildCanopy() {
   const rng = mulberry32(0x42421);
-  const back = [60, 320, 610, 880, 1130, 1390].map((x) => ({
-    at: { x: x + rng() * 40, y: -6 },
-    vine: genVine(rng, { angle: DOWN + (rng() - 0.5) * 0.5, len: 90 + rng() * 150, size: 10 }),
+  const back = [140, 520, 900, 1290].map((x) => ({
+    at: { x: x + rng() * 60, y: -6 },
+    vine: genVine(rng, { angle: DOWN + (rng() - 0.5) * 0.5, len: 80 + rng() * 130, size: 10 }),
   }));
   const moss = genMoss(rng, 1440, 16, 130);
-  const frontXs = [30, 128, 262, 395, 540, 665, 795, 935, 1075, 1215, 1355];
-  const front = frontXs.map((x, i) => {
-    const edgy = Math.min(x, 1440 - x) < 300 ? 1 : 0.55; // longer near the corners
-    return {
-      at: { x: x + rng() * 36, y: -4 },
-      vine: genVine(rng, {
-        angle: DOWN + (rng() - 0.5) * 0.4,
-        len: (i % 3 === 1 ? 130 : 190) * edgy + rng() * 120 * edgy,
-        size: 12,
-        crown: rng() < 0.6,
-      }),
-    };
-  });
+  /* A deliberately balanced composition, [x, length]: long falls near the
+     left-centre and right corner, short accents between. */
+  const spec: [number, number][] = [
+    [40, 180],
+    [185, 90],
+    [420, 300],
+    [700, 70],
+    [950, 165],
+    [1180, 100],
+    [1395, 320],
+  ];
+  const front = spec.map(([x, len]) => ({
+    at: { x: x + rng() * 30, y: -4 },
+    vine: genVine(rng, {
+      angle: DOWN + (rng() - 0.5) * 0.4,
+      len: len * (0.9 + rng() * 0.2),
+      size: 12,
+    }),
+  }));
   return { back, moss, front };
 }
 
-function buildSide(seed: number) {
+/* Side growth is two species: drapers emerge, elbow, and fall with gravity
+   (these sway); creepers cling to the panels and wander across them — thin,
+   kinked, forking, sparse-leaved — and being attached, they don't sway.
+   A runner is a draper that runs clear to the bottom of the window. */
+type SideSpec = { y: number; kind: "draper" | "creeper" | "runner"; len: number };
+
+function buildSide(seed: number, specs: SideSpec[]) {
   const rng = mulberry32(seed);
   const moss = genMoss(rng, 900, 10, 60);
-  const vines = [70, 210, 380, 560, 730].map((y) => ({
-    at: { x: -6, y: y + rng() * 60 },
-    vine: genVine(rng, {
-      angle: (rng() - 0.4) * 0.5,
-      len: 140 + rng() * 130,
-      pull: 0.055,
-      size: 11,
-      crown: rng() < 0.7,
-    }),
-  }));
+  const vines = specs.map(({ y, kind, len }) => {
+    const at = { x: -6, y: y + rng() * 50 };
+    if (kind === "creeper") {
+      return {
+        at,
+        sway: false,
+        vine: genVine(rng, {
+          angle: (rng() - 0.5) * 0.35,
+          len,
+          target: 0.16 + rng() * 0.22,
+          pull: 0.03,
+          curl: 0.95,
+          thin: true,
+          size: 8,
+          sparse: true,
+          branchy: 0.34,
+        }),
+      };
+    }
+    return {
+      at,
+      sway: true,
+      vine: genVine(rng, {
+        angle: (rng() - 0.4) * 0.4,
+        len,
+        pull: kind === "runner" ? 0.12 : 0.15,
+        size: 11,
+      }),
+    };
+  });
   return { moss, vines };
 }
 
 function buildLogoVines() {
   const rng = mulberry32(0x2077);
-  return [56, 96, 148, 212, 262, 300].map((x, i) => ({
+  /* Longer falls off the plaque's shoulders, short accents inside. */
+  const spec: [number, number][] = [
+    [66, 155],
+    [128, 75],
+    [232, 95],
+    [294, 170],
+  ];
+  return spec.map(([x, len]) => ({
     at: { x, y: 6 + rng() * 22 },
     vine: genVine(rng, {
       angle: DOWN + (rng() - 0.5) * 0.6,
-      len: i === 2 || i === 3 ? 70 + rng() * 60 : 130 + rng() * 90,
+      len: len * (0.9 + rng() * 0.25),
       size: 10,
       thin: rng() < 0.4,
     }),
   }));
+}
+
+/* Creepers that live ON a door: spidery clingers anchored to a door EDGE —
+   one growing down from the top, one crawling in through the seam — never
+   starting mid-panel. Positioned in % of the door so they ride with it. */
+function buildDoorCreepers(seed: number, side: "left" | "right") {
+  const rng = mulberry32(seed);
+  const creep = (angle: number, target: number, len: number) =>
+    genVine(rng, {
+      angle,
+      len,
+      target,
+      pull: 0.04,
+      curl: 0.9,
+      thin: true,
+      size: 8,
+      sparse: true,
+      branchy: 0.34,
+    });
+  /* Away from the seam: leftward on the left door, rightward on the right. */
+  const seamward = side === "left" ? Math.PI : 0;
+  const drift = side === "left" ? -0.35 : 0.35;
+  return [
+    {
+      left: side === "left" ? 24 + rng() * 14 : 52 + rng() * 14,
+      top: 0,
+      vine: creep(DOWN + (rng() - 0.5) * 0.4, DOWN + drift, 110 + rng() * 60),
+    },
+    {
+      left: side === "left" ? 100 : 0,
+      top: 38 + rng() * 22,
+      vine: creep(
+        seamward + (rng() - 0.5) * 0.3,
+        seamward - (side === "left" ? 0.22 : -0.22),
+        80 + rng() * 50,
+      ),
+    },
+  ];
 }
 
 function buildDoorMoss(seed: number) {
@@ -425,10 +506,23 @@ function buildDoorMoss(seed: number) {
 }
 
 const CANOPY = buildCanopy();
-const SIDE_L = buildSide(0xa42);
-const SIDE_R = buildSide(0xb42);
+const SIDE_L = buildSide(0xa42, [
+  { y: 110, kind: "draper", len: 210 },
+  { y: 400, kind: "creeper", len: 120 },
+  { y: 640, kind: "draper", len: 110 },
+]);
+/* The runner drapes all the way down the window, per the design brief. */
+const SIDE_R = buildSide(0xb42, [
+  { y: 80, kind: "creeper", len: 140 },
+  { y: 340, kind: "draper", len: 150 },
+  { y: 580, kind: "runner", len: 520 },
+]);
 const LOGO_VINES = buildLogoVines();
 const DOOR_MOSS = { left: buildDoorMoss(0xc42), right: buildDoorMoss(0xd42) };
+const DOOR_CREEPERS = {
+  left: buildDoorCreepers(0xf42, "left"),
+  right: buildDoorCreepers(0x1042, "right"),
+};
 const CONSOLE_MOSS = genMossPatch(mulberry32(0xe42), 110, 20);
 
 /* ---- Public pieces ---- */
@@ -436,7 +530,7 @@ const CONSOLE_MOSS = genMossPatch(mulberry32(0xe42), 110, 20);
 const shadow = "drop-shadow(0 5px 5px rgb(0 0 0 / 0.45))";
 
 /** Static overgrowth pinned to the site window: top canopy + both sides. */
-export function Overgrowth(): ReactNode {
+export function Overgrowth({ moss = false }: { moss?: boolean }): ReactNode {
   return (
     <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
       <svg
@@ -451,7 +545,7 @@ export function Overgrowth(): ReactNode {
             <VineG key={i} vine={v.vine} at={v.at} idp="vd-can" sway={false} tone={BACK} />
           ))}
         </g>
-        <MossG moss={CANOPY.moss} />
+        {moss && <MossG moss={CANOPY.moss} />}
         {CANOPY.front.map((v, i) => (
           <VineG key={i} vine={v.vine} at={v.at} idp="vd-can" sway />
         ))}
@@ -463,11 +557,13 @@ export function Overgrowth(): ReactNode {
         preserveAspectRatio="xMinYMin slice"
       >
         <LeafDefs idp="vd-sl" />
-        <g transform="matrix(0 1 1 0 0 0)">
-          <MossG moss={SIDE_L.moss} />
-        </g>
+        {moss && (
+          <g transform="matrix(0 1 1 0 0 0)">
+            <MossG moss={SIDE_L.moss} />
+          </g>
+        )}
         {SIDE_L.vines.map((v, i) => (
-          <VineG key={i} vine={v.vine} at={v.at} idp="vd-sl" sway={i % 2 === 0} />
+          <VineG key={i} vine={v.vine} at={v.at} idp="vd-sl" sway={v.sway} />
         ))}
       </svg>
       <svg
@@ -478,11 +574,13 @@ export function Overgrowth(): ReactNode {
       >
         <LeafDefs idp="vd-sr" />
         <g transform="translate(240 0) scale(-1 1)">
-          <g transform="matrix(0 1 1 0 0 0)">
-            <MossG moss={SIDE_R.moss} />
-          </g>
+          {moss && (
+            <g transform="matrix(0 1 1 0 0 0)">
+              <MossG moss={SIDE_R.moss} />
+            </g>
+          )}
           {SIDE_R.vines.map((v, i) => (
-            <VineG key={i} vine={v.vine} at={v.at} idp="vd-sr" sway={i % 2 === 1} />
+            <VineG key={i} vine={v.vine} at={v.at} idp="vd-sr" sway={v.sway} />
           ))}
         </g>
       </svg>
@@ -510,6 +608,31 @@ export function LogoVines({ width }: { width: string }): ReactNode {
         <VineG key={i} vine={v.vine} at={v.at} idp="vd-lv" sway />
       ))}
     </svg>
+  );
+}
+
+/** Spidery creepers clinging to a door's panels; they ride and clip with it.
+    Each is a tiny anchor svg with visible overflow — the door's own clip-path
+    trims whatever crawls past its toothed edge. */
+export function DoorCreepers({ side }: { side: "left" | "right" }): ReactNode {
+  return (
+    <>
+      {DOOR_CREEPERS[side].map((c, i) => {
+        const idp = `vd-dc-${side}${i}`;
+        return (
+          <svg
+            key={i}
+            aria-hidden
+            className="absolute h-[10px] w-[10px] overflow-visible"
+            style={{ left: `${f(c.left)}%`, top: `${f(c.top)}%` }}
+            viewBox="0 0 10 10"
+          >
+            <LeafDefs idp={idp} />
+            <VineG vine={c.vine} at={{ x: 5, y: 5 }} idp={idp} sway={false} />
+          </svg>
+        );
+      })}
+    </>
   );
 }
 
