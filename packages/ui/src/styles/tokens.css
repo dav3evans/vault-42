@@ -55,6 +55,18 @@
     rgb(14 26 38 / 0.9),
     rgb(9 18 26 / 0.96)
   );
+
+  /* Motion */
+  --animate-marquee: marquee 28s linear infinite;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 /* Shared, non-utility primitives that are awkward to express as Tailwind utilities alone. */
