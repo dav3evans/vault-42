@@ -40,13 +40,11 @@ export type VaultDoorsProps = {
    */
   backdrop?: "void" | "transparent";
   /**
-   * URL of the site logo (e.g. "/brand/logo.webp"). Painted across the seam,
-   * split between the two door halves — whole while the doors are shut, cut
-   * along each door's toothed edge once they move. Without it the doors fall
-   * back to the big 4|2 numerals.
+   * URL of the site logo (e.g. "/brand/logo.webp"), mounted as a plaque on
+   * the right door. Without it the doors fall back to the big 4|2 numerals.
    */
   logoSrc?: string;
-  /** Rendered logo width in px (capped to 52vw on small screens). */
+  /** Rendered logo width in px (capped to 38vw on small screens). */
   logoWidth?: number;
   className?: string;
 };
@@ -358,8 +356,34 @@ export function VaultDoors({
         )}
 
         {/* Door halves. */}
-        <Door side="left" animation={doorAnimation} style={doorStyle(-1)} logoSrc={logoSrc} logoWidth={logoWidth} />
-        <Door side="right" animation={doorAnimation} style={doorStyle(1)} logoSrc={logoSrc} logoWidth={logoWidth} />
+        <Door side="left" animation={doorAnimation} style={doorStyle(-1)} numeral={logoSrc ? undefined : "4"} />
+        <Door side="right" animation={doorAnimation} style={doorStyle(1)} numeral={logoSrc ? undefined : "2"} />
+
+        {/* The logo plaque, bolted to the right door. It lives outside the
+            door div (which would clip it into the teeth) on a sibling layer
+            running the identical animation, so it stays glued to the door. */}
+        {logoSrc && (
+          <div
+            className={cn("pointer-events-none absolute inset-y-0 right-0", doorAnimation)}
+            style={{ ...doorStyle(1), width: `calc(50% + ${TOOTH_DEPTH_PX / 2}px)` }}
+          >
+            <img
+              src={logoSrc}
+              alt=""
+              draggable={false}
+              className="absolute top-1/2 max-w-none opacity-95 drop-shadow-[0_18px_28px_rgb(0_0_0/0.5)]"
+              style={{
+                /* Centred on the seam while shut (the door's leading edge sits
+                   half a tooth past screen centre), riding right with the door
+                   as it opens. */
+                left: `${TOOTH_DEPTH_PX / 2}px`,
+                width: `min(${logoWidth}px, 52vw)`,
+                /* Hanging a touch crooked — one of the bolts has gone. */
+                transform: "translate(-50%, -50%) rotate(-1.6deg)",
+              }}
+            />
+          </div>
+        )}
 
         {/* Door tracks — fixed rails the doors slide behind. */}
         <div className="absolute inset-x-0 top-0 h-2.5 border-b border-line bg-[#050b11] bg-[repeating-linear-gradient(90deg,rgb(232_224_204/0.08)_0_2px,transparent_2px_24px)]" />
@@ -408,20 +432,14 @@ function Door({
   side,
   animation,
   style,
-  logoSrc,
-  logoWidth,
+  numeral,
 }: {
   side: "left" | "right";
   animation?: string;
   style: React.CSSProperties;
-  logoSrc?: string;
-  logoWidth: number;
+  numeral?: string;
 }) {
   const left = side === "left";
-  /* Capped so the emblem never outgrows small screens; the same expression
-     feeds the half-container width and the right half's offset so the two
-     halves stay pixel-aligned. */
-  const logoW = `min(${logoWidth}px, 52vw)`;
   return (
     <div
       className={cn(
@@ -472,26 +490,8 @@ function Door({
             : "left-10 bg-gradient-to-r from-black/45 to-transparent",
         )}
       />
-      {logoSrc ? (
-        /* This half's share of the emblem, aligned so both halves meet at the
-           visual seam; the door's clip-path bites the teeth into its edge. */
-        <div
-          className={cn("absolute top-1/2 -translate-y-1/2 overflow-hidden", left ? "right-0" : "left-0")}
-          style={{ width: `calc(${logoW} / 2 + ${TOOTH_DEPTH_PX / 2}px)` }}
-        >
-          <img
-            src={logoSrc}
-            alt=""
-            draggable={false}
-            className="block max-w-none opacity-90 drop-shadow-[0_14px_30px_rgb(0_0_0/0.45)]"
-            style={{
-              width: logoW,
-              marginLeft: left ? 0 : `calc(${TOOTH_DEPTH_PX / 2}px - ${logoW} / 2)`,
-            }}
-          />
-        </div>
-      ) : (
-        /* Without a logo the halves read "42" across the seam while closed. */
+      {/* Without a logo the halves read "42" across the seam while closed. */}
+      {numeral && (
         <span
           className={cn(
             "absolute top-1/2 -translate-y-1/2 font-display text-[34vmin] leading-none text-gold/12",
@@ -499,9 +499,64 @@ function Door({
             left ? "right-14" : "left-14",
           )}
         >
-          {left ? "4" : "2"}
+          {numeral}
         </span>
       )}
+      {/* Decades of neglect, painted over everything above (hazard band
+          included, so the stripes read as worn). Mirrored on the right door
+          so the corrosion isn't identical twins. */}
+      <div className={cn("absolute inset-0", !left && "-scale-x-100")} aria-hidden>
+        {/* Soft rust blooms, heaviest low down and along edges. */}
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: [
+              "radial-gradient(220px 150px at 7% 97%, rgb(96 50 22 / 0.5), transparent 70%)",
+              "radial-gradient(180px 120px at 97% 90%, rgb(110 58 24 / 0.42), transparent 70%)",
+              "radial-gradient(130px 90px at 88% 5%, rgb(84 44 18 / 0.36), transparent 72%)",
+              "radial-gradient(260px 110px at 46% 100%, rgb(74 38 15 / 0.48), transparent 75%)",
+              "radial-gradient(100px 70px at 13% 32%, rgb(98 52 22 / 0.26), transparent 70%)",
+              "radial-gradient(70px 54px at 70% 54%, rgb(122 66 26 / 0.2), transparent 70%)",
+            ].join(", "),
+          }}
+        />
+        {/* Rust pitting — two offset speckle grids. */}
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage:
+              "radial-gradient(rgb(130 72 30 / 0.14) 1px, transparent 1.4px), radial-gradient(rgb(52 28 12 / 0.2) 1px, transparent 1.3px)",
+            backgroundSize: "9px 11px, 13px 17px",
+            backgroundPosition: "0 0, 4px 7px",
+          }}
+        />
+        {/* Drip streaks running down from the track and fittings. */}
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: [
+              "linear-gradient(180deg, rgb(92 48 20 / 0.5), transparent 85%)",
+              "linear-gradient(180deg, rgb(80 42 18 / 0.4), transparent 80%)",
+              "linear-gradient(180deg, rgb(106 56 24 / 0.34), transparent 85%)",
+              "linear-gradient(180deg, rgb(70 36 16 / 0.42), transparent 82%)",
+            ].join(", "),
+            backgroundSize: "3px 36%, 5px 48%, 2px 30%, 4px 26%",
+            backgroundPosition: "18% 0, 44% 13%, 69% 0, 87% 47%",
+            backgroundRepeat: "no-repeat",
+          }}
+        />
+        {/* Faint scratches and a grime vignette. */}
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: [
+              "repeating-linear-gradient(38deg, rgb(233 224 204 / 0.045) 0 1px, transparent 1px 88px)",
+              "repeating-linear-gradient(-24deg, rgb(0 0 0 / 0.24) 0 1px, transparent 1px 61px)",
+              "radial-gradient(120% 90% at 50% 32%, transparent 52%, rgb(0 0 0 / 0.42) 100%)",
+            ].join(", "),
+          }}
+        />
+      </div>
       {/* Manufacturer plate. */}
       <span
         className={cn(
