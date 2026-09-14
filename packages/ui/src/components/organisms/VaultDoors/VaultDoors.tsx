@@ -48,6 +48,13 @@ export type VaultDoorsProps = {
   /** Rendered logo width in px (capped to 38vw on small screens). */
   logoWidth?: number;
   /**
+   * Case-insensitive code that, once typed into the "access denied" readout
+   * (click it to reveal the input), overrides the result: the doors abandon
+   * whatever `resolution` was headed for and give way instead. Ignored
+   * unless that denial message is actually on screen.
+   */
+  overrideCode?: string;
+  /**
    * Nature has been reclaiming the facility: vines hanging from the top of
    * the window and the logo plaque, creepers from the sides. On by default;
    * pass false for a freshly-built vault.
@@ -191,6 +198,7 @@ export function VaultDoors({
   backdrop,
   logoSrc,
   logoWidth = 360,
+  overrideCode = "42",
   overgrown = true,
   moss = false,
   className,
@@ -203,30 +211,42 @@ export function VaultDoors({
   const onCompleteRef = useRef(onComplete);
   onCompleteRef.current = onComplete;
 
-  /* Phase timeline. With reduced motion we skip the theatrics and hold the
-     jammed frame as a still until the fade. */
+  /* Manual override: typing the right code into the "access denied" readout
+     abandons whatever the scripted `resolution` was doing. Flipping this
+     replays the whole timeline below from "boot", as a "give-way" run. */
+  const [showOverrideInput, setShowOverrideInput] = useState(false);
+  const [overrideValue, setOverrideValue] = useState("");
+  const [overrideDenied, setOverrideDenied] = useState(false);
+  const [overridden, setOverridden] = useState(false);
+  const activeResolution: VaultDoorsResolution = overridden ? "give-way" : resolution;
+
+  /* Phase timeline, keyed on activeResolution rather than the raw prop: an
+     override changes activeResolution, which tears down whatever was
+     pending (the effect cleanup below) and replays this from the top. With
+     reduced motion we skip the theatrics and hold the jammed frame as a
+     still until the fade. */
   useEffect(() => {
     const stuckAt = reduced ? 300 : BOOT_MS + OPEN_MS;
     const timers: number[] = [
       window.setTimeout(() => setPhase(reduced ? "stuck" : "opening"), reduced ? 300 : BOOT_MS),
     ];
     if (!reduced) timers.push(window.setTimeout(() => setPhase("stuck"), stuckAt));
-    if (resolution === "jammed") {
+    if (activeResolution === "jammed") {
       /* The door never resolves; the sequence settles once it jams. */
       timers.push(window.setTimeout(() => onCompleteRef.current?.(), stuckAt));
     } else {
-      const exitMs = resolution === "slam" ? SLAM_EXIT_MS : EXIT_MS;
+      const exitMs = activeResolution === "slam" ? SLAM_EXIT_MS : EXIT_MS;
       const exitAt = Math.max(stuckAt + MIN_STUCK_MS, duration - exitMs);
       timers.push(window.setTimeout(() => setPhase("exit"), exitAt));
       timers.push(
         window.setTimeout(() => {
-          setPhase(resolution === "slam" ? "sealed" : "done");
+          setPhase(activeResolution === "slam" ? "sealed" : "done");
           onCompleteRef.current?.();
         }, exitAt + exitMs),
       );
     }
     return () => timers.forEach((t) => window.clearTimeout(t));
-  }, [duration, reduced, resolution]);
+  }, [duration, reduced, activeResolution]);
 
   /* Keep the page still while the doors hog the screen. */
   useEffect(() => {
@@ -261,15 +281,15 @@ export function VaultDoors({
       );
       return () => window.clearInterval(interval);
     }
-    if (phase === "exit" && resolution !== "fade") {
+    if (phase === "exit" && activeResolution !== "fade") {
       /* give-way sprints to 100; slam crashes back to 0 alongside the doors. */
-      const rampMs = resolution === "slam" ? 500 : EXIT_MS * 0.6;
+      const rampMs = activeResolution === "slam" ? 500 : EXIT_MS * 0.6;
       const start = performance.now();
       let frame: number;
       const tick = (now: number) => {
         const t = Math.min((now - start) / rampMs, 1);
         setPercent(
-          resolution === "slam"
+          activeResolution === "slam"
             ? Math.round(STUCK_PERCENT * (1 - t) * (1 - t))
             : Math.round(STUCK_PERCENT + (100 - STUCK_PERCENT) * t),
         );
@@ -278,7 +298,7 @@ export function VaultDoors({
       frame = requestAnimationFrame(tick);
       return () => cancelAnimationFrame(frame);
     }
-  }, [phase, reduced, resolution]);
+  }, [phase, reduced, activeResolution]);
 
   /* Rotate the excuses while jammed. */
   useEffect(() => {
@@ -298,25 +318,27 @@ export function VaultDoors({
     ? undefined
     : phase === "opening"
       ? "animate-door-open"
-      : phase === "stuck" || (phase === "exit" && resolution === "fade")
+      : phase === "stuck" || (phase === "exit" && activeResolution === "fade")
         ? "animate-door-strain"
         : phase === "exit"
-          ? resolution === "slam"
+          ? activeResolution === "slam"
             ? "animate-door-slam"
             : "animate-door-give"
           : undefined;
 
   /* Only a "give-way" exit is a success; everything else stays red. */
   const jammed =
-    phase === "stuck" || phase === "sealed" || (phase === "exit" && resolution !== "give-way");
+    phase === "stuck" ||
+    phase === "sealed" ||
+    (phase === "exit" && activeResolution !== "give-way");
 
   /* Terminal states: the overlay is staying, and so is the visitor. */
-  const terminal = phase === "sealed" || (resolution === "jammed" && phase === "stuck");
+  const terminal = phase === "sealed" || (activeResolution === "jammed" && phase === "stuck");
 
   /* Reduced motion renders the doors as stills: the jammed position, then a
      jump cut to closed for a "slam" exit. */
   const stillPercent =
-    (phase === "exit" && resolution === "slam") || phase === "sealed" ? 0 : STUCK_PERCENT;
+    (phase === "exit" && activeResolution === "slam") || phase === "sealed" ? 0 : STUCK_PERCENT;
   const doorStyle = (dir: -1 | 1) => ({
     "--door-dir": dir,
     transform:
@@ -327,12 +349,37 @@ export function VaultDoors({
     phase === "stuck"
       ? stuckMessages[messageIndex] ?? "Obstruction detected"
       : phase === "exit" || phase === "sealed"
-        ? EXIT_MESSAGE[phase === "sealed" ? "slam" : resolution]
+        ? EXIT_MESSAGE[phase === "sealed" ? "slam" : activeResolution]
         : PHASE_MESSAGE[phase];
   const pill =
     phase === "exit" || phase === "sealed"
-      ? EXIT_PILL[phase === "sealed" ? "slam" : resolution]
+      ? EXIT_PILL[phase === "sealed" ? "slam" : activeResolution]
       : PHASE_PILL[phase];
+
+  /* The "access denied" readout doubles as a hidden override prompt: click
+     it to type the code and force a give-way exit instead. */
+  const showingDenied =
+    !overridden && ((phase === "exit" && resolution === "slam") || phase === "sealed");
+
+  function submitOverride() {
+    const guess = overrideValue.trim().toLowerCase();
+    if (!guess) return;
+    if (guess === overrideCode.trim().toLowerCase()) {
+      setOverridden(true);
+      setShowOverrideInput(false);
+      setOverrideValue("");
+      /* Replay from the top rather than cutting straight to the exit — the
+         phase-timeline effect above picks this up (activeResolution just
+         flipped to "give-way") and reschedules the whole run from "boot". */
+      setPhase("boot");
+      setPercent(0);
+      setMessageIndex(0);
+    } else {
+      setOverrideDenied(true);
+      setOverrideValue("");
+      window.setTimeout(() => setOverrideDenied(false), 320);
+    }
+  }
 
   return (
     <div
@@ -340,7 +387,7 @@ export function VaultDoors({
       className={cn(
         "fixed inset-0 z-[80] overflow-hidden font-sans text-text select-none",
         "transition-opacity duration-500",
-        phase === "exit" && resolution !== "slam" && "opacity-0 delay-300",
+        phase === "exit" && activeResolution !== "slam" && "opacity-0 delay-300",
         terminal && "cursor-not-allowed",
         className,
       )}
@@ -349,7 +396,7 @@ export function VaultDoors({
         className={cn(
           "absolute inset-0",
           !reduced && phase === "stuck" && "animate-door-jolt",
-          !reduced && phase === "exit" && resolution === "slam" && "animate-door-slam-jolt",
+          !reduced && phase === "exit" && activeResolution === "slam" && "animate-door-slam-jolt",
         )}
       >
         {/* What the doors are failing to reveal. */}
@@ -437,10 +484,60 @@ export function VaultDoors({
                 )}
               </div>
             </div>
-            <p className="mt-3.5 font-mono text-[0.66rem] uppercase tracking-[0.18em] text-muted-2">
-              {message}
-              <span className="ml-1 animate-pulse text-gold">▮</span>
-            </p>
+            {showingDenied && showOverrideInput ? (
+              <div
+                className={cn(
+                  "mt-3.5 flex items-center gap-1.5 border-b border-gold/30 pb-0.5",
+                  overrideDenied && "animate-door-jolt border-red",
+                )}
+              >
+                <span
+                  className={cn(
+                    "font-mono text-[0.66rem] text-gold",
+                    overrideDenied && "text-red",
+                  )}
+                >
+                  &gt;
+                </span>
+                <input
+                  autoFocus
+                  type="text"
+                  inputMode="text"
+                  autoComplete="off"
+                  autoCorrect="off"
+                  autoCapitalize="off"
+                  spellCheck={false}
+                  value={overrideValue}
+                  onChange={(event) => setOverrideValue(event.target.value)}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter") submitOverride();
+                    if (event.key === "Escape") {
+                      setShowOverrideInput(false);
+                      setOverrideValue("");
+                    }
+                  }}
+                  onBlur={() => {
+                    if (!overrideValue) setShowOverrideInput(false);
+                  }}
+                  placeholder="ENTER OVERRIDE CODE"
+                  className={cn(
+                    "w-full bg-transparent font-mono text-[0.66rem] uppercase tracking-[0.18em] text-gold outline-none placeholder:text-muted-2",
+                    overrideDenied && "text-red",
+                  )}
+                />
+              </div>
+            ) : (
+              <p
+                className={cn(
+                  "mt-3.5 font-mono text-[0.66rem] uppercase tracking-[0.18em] text-muted-2",
+                  showingDenied && "cursor-pointer hover:text-gold",
+                )}
+                onClick={showingDenied ? () => setShowOverrideInput(true) : undefined}
+              >
+                {message}
+                <span className="ml-1 animate-pulse text-gold">▮</span>
+              </p>
+            )}
           </div>
         </div>
       </div>
