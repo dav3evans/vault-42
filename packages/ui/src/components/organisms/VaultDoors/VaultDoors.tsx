@@ -47,12 +47,7 @@ export type VaultDoorsProps = {
   logoSrc?: string;
   /** Rendered logo width in px (capped to 38vw on small screens). */
   logoWidth?: number;
-  /**
-   * Case-insensitive code that, once typed into the "access denied" readout
-   * (click it to reveal the input), overrides the result: the doors abandon
-   * whatever `resolution` was headed for and give way instead. Ignored
-   * unless that denial message is actually on screen.
-   */
+  /** Case-insensitive code that, typed into the "access denied" readout, forces a give-way exit. */
   overrideCode?: string;
   /**
    * Nature has been reclaiming the facility: vines hanging from the top of
@@ -211,20 +206,14 @@ export function VaultDoors({
   const onCompleteRef = useRef(onComplete);
   onCompleteRef.current = onComplete;
 
-  /* Manual override: typing the right code into the "access denied" readout
-     abandons whatever the scripted `resolution` was doing. Flipping this
-     replays the whole timeline below from "boot", as a "give-way" run. */
   const [showOverrideInput, setShowOverrideInput] = useState(false);
   const [overrideValue, setOverrideValue] = useState("");
   const [overrideDenied, setOverrideDenied] = useState(false);
   const [overridden, setOverridden] = useState(false);
   const activeResolution: VaultDoorsResolution = overridden ? "give-way" : resolution;
 
-  /* Phase timeline, keyed on activeResolution rather than the raw prop: an
-     override changes activeResolution, which tears down whatever was
-     pending (the effect cleanup below) and replays this from the top. With
-     reduced motion we skip the theatrics and hold the jammed frame as a
-     still until the fade. */
+  /* Phase timeline. With reduced motion we skip the theatrics and hold the
+     jammed frame as a still until the fade. */
   useEffect(() => {
     const stuckAt = reduced ? 300 : BOOT_MS + OPEN_MS;
     const timers: number[] = [
@@ -356,8 +345,6 @@ export function VaultDoors({
       ? EXIT_PILL[phase === "sealed" ? "slam" : activeResolution]
       : PHASE_PILL[phase];
 
-  /* The "access denied" readout doubles as a hidden override prompt: click
-     it to type the code and force a give-way exit instead. */
   const showingDenied =
     !overridden && ((phase === "exit" && resolution === "slam") || phase === "sealed");
 
@@ -368,9 +355,6 @@ export function VaultDoors({
       setOverridden(true);
       setShowOverrideInput(false);
       setOverrideValue("");
-      /* Replay from the top rather than cutting straight to the exit — the
-         phase-timeline effect above picks this up (activeResolution just
-         flipped to "give-way") and reschedules the whole run from "boot". */
       setPhase("boot");
       setPercent(0);
       setMessageIndex(0);
