@@ -5,11 +5,8 @@ import { cn } from "../../../lib/cn";
 const tileStyles = cva("relative overflow-hidden", {
   variants: {
     variant: {
-      // Quick-book cards: panel gradient + hazard-stripe top edge.
       quick: "border border-line bg-panel-fade p-[18px] shadow-[0_16px_36px_rgba(0,0,0,0.26)]",
-      // "Why Vault 42" cards: same panel gradient, no top stripe, taller padding.
       feature: "border border-line bg-panel-fade px-5 pt-6 pb-6",
-      // "Perfect for" cards and room cards: flat, subtle surface.
       muted: "border border-white/5 bg-white/[0.02] p-[18px]",
     },
   },

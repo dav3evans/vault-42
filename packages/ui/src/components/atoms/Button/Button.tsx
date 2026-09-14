@@ -11,7 +11,6 @@ const buttonStyles = cva(
         secondary: "text-text border border-gold/24 bg-bg-2/46 hover:border-gold/50",
         chip: "min-h-[42px] px-[18px] text-sm text-muted bg-white/[0.03] border border-white/[0.07] hover:text-gold",
       },
-      // `chip` ignores size entirely — it's always the compact pill shape.
       size: {
         md: "",
         sm: "",
