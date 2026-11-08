@@ -75,11 +75,12 @@ export default function BirthdayPartiesPage() {
       <section className="mx-auto max-w-(--container-max) px-3.5 pb-16">
         <Panel accentTop={false}>
           <Heading as="h2" size="card" className="mb-3">
-            Coming later: themed laser tag packages
+            On the horizon: themed party packages
           </Heading>
           <p className="text-[0.97rem] leading-[1.75] text-text/72">
-            Command Centre, Skull Temple and Bio-Dome — our themed laser tag and mixed-session party
-            packages — return once Hexforce Laser Tag unlocks. Register interest on the{" "}
+            Command Centre, Skull Temple and Bio-Dome are ideas we&apos;re exploring for themed, mixed-session
+            party packages alongside Hexforce Laser Tag — timing and final details aren&apos;t confirmed yet.
+            Register interest on the{" "}
             <Link href="/laser-tag" className="text-gold no-underline">
               Laser Tag
             </Link>{" "}

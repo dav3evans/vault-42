@@ -9,10 +9,12 @@ export const primaryNav = [
   },
   { label: "Parties & Events", href: "/parties" },
   { label: "Special Events", href: "/events" },
-  { label: "The Story", href: "/story" },
-  { label: "Membership", href: "/membership" },
   { label: "Contact", href: "/contact" },
 ];
+
+// The Story and Membership are both benched for now — Story needs a genuine rewrite from the
+// client's own archives, and Membership ties to Laser Tag, which isn't live yet. Routes and files
+// stay in place (unlinked, like /attractions) so they're easy to bring back later.
 
 export const footerColumns = [
   {
@@ -21,8 +23,6 @@ export const footerColumns = [
       { label: "Axe Throwing", href: "/axe-throwing" },
       { label: "Parties & Events", href: "/parties" },
       { label: "Special Events", href: "/events" },
-      { label: "The Story", href: "/story" },
-      { label: "Membership", href: "/membership" },
     ],
   },
   {
@@ -49,6 +49,11 @@ export const siteContact = {
   websiteHref: "https://vault42.uk",
   address: "Unit 1 - 2, Closers Business Centre, Avenue Road, Nuneaton, CV11 4ND",
 };
+
+export const openingHours = [
+  { days: "Monday – Friday", hours: "4:00pm – 9:00pm" },
+  { days: "Saturday – Sunday", hours: "10:00am – 9:00pm" },
+];
 
 /**
  * All bookings and payment go through Wanna Book — nothing is processed on vault42.uk itself.

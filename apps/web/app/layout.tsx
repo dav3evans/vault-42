@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { Bebas_Neue, Barlow, Barlow_Condensed, Share_Tech_Mono } from "next/font/google";
 import { Header, Footer, StickyMobileBar } from "@vault42/ui";
-import { primaryNav, footerColumns, bookingHref, socialLinks } from "@/lib/site-nav";
+import { primaryNav, footerColumns, bookingHref, socialLinks, siteContact } from "@/lib/site-nav";
 import "./globals.css";
 
 const bebasNeue = Bebas_Neue({
@@ -60,7 +60,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           social={socialLinks}
           copyright="Vault 42® is a registered trade mark of Hex Box Limited"
         />
-        <StickyMobileBar primary={{ label: "Book Now", href: bookingHref }} secondary={{ label: "See Pricing", href: "/axe-throwing#pricing" }} />
+        <StickyMobileBar primary={{ label: "Book Now", href: bookingHref }} secondary={{ label: "Call Us", href: siteContact.phoneHref }} />
       </body>
     </html>
   );

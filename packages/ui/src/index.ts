@@ -19,6 +19,7 @@ export * from "./components/molecules/ContactItem/ContactItem";
 export * from "./components/molecules/ActionRow/ActionRow";
 export * from "./components/molecules/FooterLinkGroup/FooterLinkGroup";
 export * from "./components/molecules/NavDropdown/NavDropdown";
+export * from "./components/molecules/MobileNav/MobileNav";
 export * from "./components/molecules/SocialLinks/SocialLinks";
 export * from "./components/molecules/Callout/Callout";
 export * from "./components/molecules/BlogPostCard/BlogPostCard";

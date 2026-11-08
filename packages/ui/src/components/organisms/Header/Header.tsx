@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { Brand } from "../../atoms/Brand/Brand";
 import { NavLink } from "../../atoms/NavLink/NavLink";
 import { NavDropdown, type NavDropdownItem } from "../../molecules/NavDropdown/NavDropdown";
+import { MobileNav } from "../../molecules/MobileNav/MobileNav";
 import { Button } from "../../atoms/Button/Button";
 import { cn } from "../../../lib/cn";
 
@@ -36,8 +37,12 @@ export function Header({
         className,
       )}
     >
-      <div className="mx-auto flex max-w-(--container-max) flex-col items-start gap-3 px-3.5 py-2.5 max-[760px]:items-start min-[760px]:min-h-[74px] min-[760px]:flex-row min-[760px]:items-center min-[760px]:justify-between">
-        <Brand title={brandTitle} subtitle={brandSubtitle} logo={logo} href={homeHref} />
+      <div className="mx-auto flex max-w-(--container-max) flex-col gap-3 px-3.5 py-2.5 min-[760px]:min-h-[74px] min-[760px]:flex-row min-[760px]:items-center min-[760px]:justify-between">
+        <div className="flex w-full items-center justify-between min-[760px]:w-auto min-[760px]:justify-start">
+          <Brand title={brandTitle} subtitle={brandSubtitle} logo={logo} href={homeHref} />
+          {/* Below 521px the full nav hides (next sibling), so this hamburger takes over navigation. */}
+          <MobileNav links={links} />
+        </div>
         {/* Below 520px the sticky mobile bar takes over booking, so the full nav (including Book Now) hides here. */}
         <nav
           aria-label="Primary navigation"

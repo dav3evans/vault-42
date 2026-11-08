@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { PageHeader, Accent, Panel, Heading, ContactItem, FaqAccordion, InquiryForm } from "@vault42/ui";
-import { siteContact } from "@/lib/site-nav";
+import { siteContact, openingHours } from "@/lib/site-nav";
 
 export const metadata: Metadata = {
   title: "Contact Us",
@@ -63,6 +63,13 @@ export default function ContactPage() {
               {siteContact.email}
             </ContactItem>
             <ContactItem label="Address">{siteContact.address}</ContactItem>
+            <ContactItem label="Opening Hours">
+              {openingHours.map((row) => (
+                <div key={row.days}>
+                  {row.days}: {row.hours}
+                </div>
+              ))}
+            </ContactItem>
           </div>
         </Panel>
       </section>
