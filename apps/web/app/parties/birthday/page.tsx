@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { PageHeader, Accent, PriceCard, Panel, Heading, BulletList, Callout } from "@vault42/ui";
+import { PageHeader, Accent, TileGridPanel, Panel, Heading, BulletList } from "@vault42/ui";
 
 export const metadata: Metadata = {
   title: "Birthday Parties",
@@ -22,41 +22,54 @@ export default function BirthdayPartiesPage() {
       />
 
       <section className="mx-auto max-w-(--container-max) px-3.5 py-16">
-        <div className="grid grid-cols-1 gap-5 lg:grid-cols-[1.1fr_1fr]">
-          <PriceCard
-            title="Axe Throwing"
-            description="Standard lane pricing applies — the base for every party."
-            rows={[
-              { label: "2 Players", value: "£24 pp" },
-              { label: "3 Players", value: "£23 pp" },
-              { label: "4 Players", value: "£22 pp" },
-              { label: "5 Players", value: "£21 pp" },
-              { label: "6 Players", value: "£20 pp" },
+        <TileGridPanel
+          title="Ways to book"
+          variant="feature"
+          columns={3}
+          items={[
+            {
+              title: "Lane-Only Celebration",
+              description: "Straight onto the Champ Throw lanes — pricing scales with group size, from £24pp for 2 players down to £20pp for 6.",
+            },
+            {
+              title: "Private Party Room",
+              description: "Lane time plus a dedicated party room, with food laid on and a Vault Custodian running the session.",
+            },
+            {
+              title: "Full Celebration Package",
+              description: "Lane time, party room, food and a goodie bag for every guest — tell us your numbers and we'll build it around you.",
+            },
+          ]}
+        />
+      </section>
+
+      <section className="mx-auto grid max-w-(--container-max) grid-cols-1 gap-5 px-3.5 pb-16 lg:grid-cols-2">
+        <Panel>
+          <Heading as="h2" size="card" className="mb-3">
+            Custom add-ons
+          </Heading>
+          <BulletList
+            items={[
+              "Extra lane time",
+              "Personalised cake table setup",
+              "Upgraded goodie bags",
+              "Additional party room time",
             ]}
-            note="Add a private party room and food, then enquire with your group size for a full quote."
           />
-          <Panel>
-            <Heading as="h2" size="card" className="mb-3">
-              Custom add-ons
-            </Heading>
-            <BulletList
-              items={[
-                "Extra lane time",
-                "Personalised cake table setup",
-                "Upgraded goodie bags",
-                "Additional party room time",
-              ]}
-            />
-            <Callout title="Good to know" className="mt-5">
-              A minimum group size applies — check with the team when you enquire. Food allergies and
-              dietary needs are catered for with advance notice; see our{" "}
-              <Link href="/food-drink" className="text-gold no-underline">
-                Food &amp; Drink
-              </Link>{" "}
-              page for party menu options.
-            </Callout>
-          </Panel>
-        </div>
+        </Panel>
+        <Panel>
+          <Heading as="h2" size="card" className="mb-3">
+            Good to know
+          </Heading>
+          <p className="text-[0.97rem] leading-[1.75] text-text/72">
+            A minimum group size applies — check with the team when you enquire. Food allergies and
+            dietary needs are catered for with advance notice; see our{" "}
+            <Link href="/food-drink" className="text-gold no-underline">
+              Food &amp; Drink
+            </Link>{" "}
+            page for party menu options.
+          </p>
+        </Panel>
       </section>
 
       <section className="mx-auto max-w-(--container-max) px-3.5 pb-16">
