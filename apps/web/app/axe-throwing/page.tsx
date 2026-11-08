@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { PageHeader, Panel, Heading, Accent, BulletList, Tag, TileGridPanel } from "@vault42/ui";
+import { PageHeader, Panel, Heading, Accent, BulletList, Tag, TileGridPanel, PriceCard, Button } from "@vault42/ui";
 import { bookingHref } from "@/lib/site-nav";
 
 export const metadata: Metadata = {
   title: "Axe Throwing",
-  description: "Augmented reality axe throwing, game modes, safety rules and booking options at Vault 42.",
+  description: "Augmented reality axe throwing, game modes, safety rules and pricing at Vault 42.",
 };
 
 export default function AxeThrowingPage() {
@@ -20,7 +20,7 @@ export default function AxeThrowingPage() {
         description="Unlike static axe lanes, Vault 42's digital Champ Throw system gives you moving targets, real-time scoring and 16 interactive game modes."
         actions={[
           { label: "Book Axe Throwing", href: bookingHref },
-          { label: "See Pricing", href: "/pricing", variant: "secondary" },
+          { label: "See Pricing", href: "#pricing", variant: "secondary" },
         ]}
       />
 
@@ -69,6 +69,40 @@ export default function AxeThrowingPage() {
             { title: "Corporate Sessions", description: "A sharper alternative to the usual team day, with guided competitive formats." },
           ]}
         />
+      </section>
+
+      <section id="pricing" className="mx-auto max-w-(--container-max) px-3.5 pb-16">
+        <Heading as="h2" size="section" className="mb-8">
+          Simple pricing. <Accent>Easy to book.</Accent>
+        </Heading>
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-[1fr_320px]">
+          <PriceCard
+            title="Digital Champ Throw"
+            description="Pricing drops as your group grows — no hidden fees, no deposit games."
+            rows={[
+              { label: "2 Players", value: "£24 pp" },
+              { label: "3 Players", value: "£23 pp" },
+              { label: "4 Players", value: "£22 pp" },
+              { label: "5 Players", value: "£21 pp" },
+              { label: "6 Players", value: "£20 pp" },
+            ]}
+            note="Bigger group or a private party room? Get in touch and we'll confirm pricing for you."
+          />
+          <Panel>
+            <Heading as="h3" size="card" className="mb-4">
+              Ready to throw?
+            </Heading>
+            <p className="mb-5 text-[0.93rem] leading-[1.68] text-text/68">
+              Book your lane online now, or call and a Vault Custodian will sort it for you today.
+            </p>
+            <div className="grid gap-3">
+              <Button href={bookingHref}>Book Axe Throwing</Button>
+              <Button href="tel:02476954242" variant="secondary">
+                Call 02476 954242
+              </Button>
+            </div>
+          </Panel>
+        </div>
       </section>
     </>
   );

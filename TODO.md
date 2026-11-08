@@ -20,9 +20,6 @@ one-line note on how.
 
 ## Needs a decision, not just an answer
 
-- [ ] **Main nav scope** — "Attractions" is now a dropdown (Axe Throwing only), but the rest of the nav
-      (Parties & Events, Pricing, The Story, Membership, Contact) is still the full original list, not
-      pared down to the brief's lean 6-item version. Keep it broad, or trim it down?
 - [ ] **`/attractions` overview + `/attractions/future`** — both still exist but are unlinked from
       everywhere. Decide whether they get relinked (into the Attractions dropdown) once Laser Tag and
       Escape Rooms go live, get reworked, or just stay as-is indefinitely.
@@ -52,3 +49,14 @@ one-line note on how.
 - [x] URLs flattened: `/axe-throwing`, `/laser-tag`, `/escape-rooms` instead of nested under
       `/attractions/*`.
 - [x] Footer social row added (Facebook live, Instagram placeholder — see open items above).
+- [x] Round 2 cohesion pass: retired the standalone `/pricing` page (it was mostly "coming soon" line
+      items) — it now redirects to `/axe-throwing#pricing`, where the real price table lives alongside
+      the product. Main nav no longer lists "Pricing" separately.
+- [x] Home page rebalanced around Axe Throwing: the three "coming soon" sections (Laser Tag detail,
+      Escape Rooms detail, and the non-live cards mixed into "book now"/pricing) are now one compact
+      "What's coming to the Vault" section. Marquee, StoryTeaser and the final CTA panel trimmed to stop
+      leading with what's missing.
+- [x] Trimmed repeated "once laser tag unlocks" asides out of Parties (corporate, school/youth,
+      special occasions), Membership and Policies pages — those now describe what's bookable today;
+      the "coming later" messaging is concentrated on the home page and the dedicated Laser Tag/Escape
+      Rooms pages instead of repeated on every page.

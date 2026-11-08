@@ -36,8 +36,8 @@ export default function SafetyPage() {
           </Heading>
           <BulletList
             items={[
-              "Laser tag is suitable for ages 7 and up. Younger Explorers can join the Wasteland Warriors Kids Club sessions.",
               "Axe throwing has a minimum age requirement — see your booking confirmation or ask our team for the current age limit.",
+              "Laser tag will be suitable for ages 7 and up once it launches, with a dedicated Wasteland Warriors Kids Club for younger Explorers.",
               "Under-18s must have a parent or guardian complete the digital waiver on their behalf.",
             ]}
           />

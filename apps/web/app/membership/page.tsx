@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { PageHeader, Accent, PriceCard, Panel, Heading, BulletList, Callout } from "@vault42/ui";
 
 export const metadata: Metadata = {
-  title: "Memberships & Loyalty",
-  description: "Laser tag and axe throwing memberships, plus referral and loyalty rewards at Vault 42.",
+  title: "Membership & Loyalty",
+  description: "Axe throwing membership, plus referral and loyalty rewards at Vault 42.",
 };
 
 export default function MembershipPage() {
   return (
     <>
       <PageHeader
-        eyebrow="Memberships & Loyalty"
+        eyebrow="Membership & Loyalty"
         heading={
           <>
             For Explorers who <Accent>keep coming back</Accent>
@@ -20,10 +21,10 @@ export default function MembershipPage() {
       />
 
       <section className="mx-auto max-w-(--container-max) px-3.5 py-16">
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-5 lg:grid-cols-[1fr_320px]">
           <PriceCard
             title="Axe Throwing Membership"
-            description="For regulars who want cheaper lanes and priority slots — live now."
+            description="For regulars who want cheaper lanes and priority slots."
             rows={[
               { label: "Monthly", value: "£14.99" },
               { label: "Member lane rate", value: "£15" },
@@ -31,16 +32,18 @@ export default function MembershipPage() {
             ]}
             note="Cancel any time. Priority booking on weekend slots."
           />
-          <PriceCard
-            title="Laser Tag Membership"
-            description="For Explorers who want the Hexforce Arena on tap — sector locked."
-            rows={[
-              { label: "Monthly", value: "£12.99" },
-              { label: "Member game rate", value: "£4.95" },
-              { label: "Guest passes", value: "2 / month" },
-            ]}
-            note="Planned pricing — sign-ups open once laser tag unlocks."
-          />
+          <Panel accentTop={false}>
+            <Heading as="h2" size="card" className="mb-3">
+              Coming later
+            </Heading>
+            <p className="text-[0.93rem] leading-[1.68] text-text/68">
+              A Laser Tag membership opens up once Hexforce Laser Tag unlocks — register interest on the{" "}
+              <Link href="/laser-tag" className="text-gold no-underline">
+                Laser Tag
+              </Link>{" "}
+              page to hear first.
+            </p>
+          </Panel>
         </div>
       </section>
 
@@ -66,8 +69,8 @@ export default function MembershipPage() {
             Refer a friend who signs up for membership and you both get a free game. Loyalty points
             build with every visit, member or not, and can be redeemed against future sessions.
           </p>
-          <Callout title="Coming with online booking">
-            Point tracking and referral codes will go live alongside the online booking system — for now, ask a Vault Custodian to log your referral in person.
+          <Callout title="Coming soon">
+            Point tracking and referral codes will go live once we add a dedicated membership system — for now, ask a Vault Custodian to log your referral in person.
           </Callout>
         </Panel>
       </section>

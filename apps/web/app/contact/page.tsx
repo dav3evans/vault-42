@@ -9,16 +9,16 @@ export const metadata: Metadata = {
 
 const faqs = [
   {
-    question: "What age is laser tag suitable for?",
-    answer: "Laser tag is suitable for ages 7 and up. Younger Explorers can join the Wasteland Warriors Kids Club sessions, which run every Saturday and Sunday at 10:20 AM.",
+    question: "What age is axe throwing suitable for?",
+    answer: "A minimum age applies — see our Safety & Waiver Policy, or ask when you book and we'll confirm it's a good fit for your group.",
   },
   {
     question: "Do I need to book in advance?",
     answer: "We recommend booking or calling ahead to guarantee your slot, especially for weekends, parties and group bookings.",
   },
   {
-    question: "Can I book a mixed laser tag and axe throwing session?",
-    answer: "Yes — the Skull Temple party package combines both. Outside of parties, get in touch and we'll see what we can put together.",
+    question: "Can I book a party or group session?",
+    answer: "Yes — axe throwing parties and group sessions are available now, by enquiry. Send us your group size and we'll confirm pricing and a slot.",
   },
   {
     question: "Is there parking on site?",

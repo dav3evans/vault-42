@@ -60,7 +60,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           social={socialLinks}
           copyright="Vault 42® is a registered trade mark of Hex Box Limited"
         />
-        <StickyMobileBar primary={{ label: "Book Now", href: bookingHref }} secondary={{ label: "See Pricing", href: "/pricing" }} />
+        <StickyMobileBar primary={{ label: "Book Now", href: bookingHref }} secondary={{ label: "See Pricing", href: "/axe-throwing#pricing" }} />
       </body>
     </html>
   );

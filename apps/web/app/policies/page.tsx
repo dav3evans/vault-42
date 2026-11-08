@@ -14,7 +14,7 @@ const policyFaqs = [
   },
   {
     question: "What if someone in my group has mobility needs?",
-    answer: "Let us know when you book. Both the laser tag arena and axe throwing lanes can be adapted for most mobility and sensory needs — see Accessibility below.",
+    answer: "Let us know when you book. The axe throwing lanes can be adapted for most mobility and sensory needs — see Accessibility below.",
   },
 ];
 
@@ -38,10 +38,9 @@ export default function PoliciesPage() {
           </Heading>
           <BulletList
             items={[
-              "Every session is briefed by a Vault Custodian before play begins, including laser tag arena hazards and axe throwing lane rules.",
+              "Every session is briefed by a Vault Custodian before play begins, covering axe throwing lane rules and safety.",
               "Closed-lane design on axe throwing keeps throwers and spectators fully separated at all times.",
               "Closed-toe shoes are required on the axe throwing lanes at all times.",
-              "Laser tag equipment is sanitised between every session.",
               "First-aid trained staff are on site during all opening hours.",
               "Vault 42 operates a zero-tolerance policy on intoxication — see our Safety & Waiver Policy for details.",
             ]}
@@ -80,9 +79,9 @@ export default function PoliciesPage() {
           </Heading>
           <p className="text-[0.97rem] leading-[1.75] text-text/72">
             Vault 42 is a step-free, ground-floor venue. Our SEN-friendly sessions offer a calmer,
-            more manageable version of laser tag for groups that need it — ask about these when you
-            book. If you have specific access requirements, let us know in advance and we&apos;ll do what
-            we can to accommodate them.
+            more manageable version of axe throwing for groups that need it — ask about these when
+            you book. If you have specific access requirements, let us know in advance and we&apos;ll do
+            what we can to accommodate them.
           </p>
         </Panel>
       </section>
