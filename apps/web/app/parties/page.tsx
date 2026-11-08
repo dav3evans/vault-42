@@ -11,7 +11,7 @@ const categories = [
     tag: "Birthdays",
     title: "Kids, teens & adult parties",
     description: "Themed packages built around the Vault 42 world, with a private party room and food included.",
-    bullets: ["Command Centre, Skull Temple and Bio-Dome packages", "Goodie bags and custom add-ons available"],
+    bullets: ["Axe Throwing parties available now, by enquiry", "Command Centre, Skull Temple and Bio-Dome packages return once laser tag unlocks"],
     actions: [{ label: "Birthday Packages", href: "/parties/birthday" }],
   },
   {

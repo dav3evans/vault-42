@@ -21,6 +21,19 @@ export default function BirthdayPartiesPage() {
       />
 
       <section className="mx-auto max-w-(--container-max) px-3.5 py-16">
+        <Heading as="h2" size="section" className="mb-6">
+          Live now
+        </Heading>
+        <p className="mb-6 max-w-2xl text-[0.97rem] leading-[1.75] text-text/72">
+          An Axe Throwing party is bookable today — enquire with your group size and we&apos;ll confirm
+          pricing and a private party room slot.
+        </p>
+      </section>
+
+      <section className="mx-auto max-w-(--container-max) px-3.5 pb-16">
+        <Heading as="h2" size="section" className="mb-6">
+          Sector locked — returning with laser tag
+        </Heading>
         <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
           <PriceCard
             title="Command Centre Package"
@@ -30,7 +43,7 @@ export default function BirthdayPartiesPage() {
               { label: "Game time", value: "2 games" },
               { label: "Party room", value: "45 minutes" },
             ]}
-            note="Includes refreshments and a dedicated Vault Custodian host."
+            note="Includes refreshments and a dedicated Vault Custodian host. Returns once laser tag unlocks."
           />
           <PriceCard
             title="Skull Temple Package"
@@ -40,7 +53,7 @@ export default function BirthdayPartiesPage() {
               { label: "Game time", value: "1 laser game + axe lane" },
               { label: "Party room", value: "45 minutes" },
             ]}
-            note="Recommended for ages 10 and up. Includes refreshments."
+            note="Recommended for ages 10 and up. Returns once laser tag unlocks."
           />
           <PriceCard
             title="Bio-Dome Package"
@@ -50,7 +63,7 @@ export default function BirthdayPartiesPage() {
               { label: "Game time", value: "3 games" },
               { label: "Party room", value: "60 minutes" },
             ]}
-            note="Includes food, drinks and a Vault 42 goodie bag per guest."
+            note="Includes food, drinks and a Vault 42 goodie bag per guest. Returns once laser tag unlocks."
           />
         </div>
       </section>

@@ -7,6 +7,7 @@ export * from "./components/atoms/Brand/Brand";
 export * from "./components/atoms/OutlineText/OutlineText";
 export * from "./components/atoms/StatusPill/StatusPill";
 export * from "./components/atoms/NavLink/NavLink";
+export * from "./components/atoms/SocialIcon/SocialIcon";
 
 export * from "./components/molecules/Panel/Panel";
 export * from "./components/molecules/StatBlock/StatBlock";
@@ -17,6 +18,8 @@ export * from "./components/molecules/NumberedStep/NumberedStep";
 export * from "./components/molecules/ContactItem/ContactItem";
 export * from "./components/molecules/ActionRow/ActionRow";
 export * from "./components/molecules/FooterLinkGroup/FooterLinkGroup";
+export * from "./components/molecules/NavDropdown/NavDropdown";
+export * from "./components/molecules/SocialLinks/SocialLinks";
 export * from "./components/molecules/Callout/Callout";
 export * from "./components/molecules/BlogPostCard/BlogPostCard";
 export * from "./components/molecules/JobListingCard/JobListingCard";

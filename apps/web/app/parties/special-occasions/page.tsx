@@ -24,7 +24,7 @@ export default function SpecialOccasionsPage() {
           variant="muted"
           columns={3}
           items={[
-            { title: "Hen & Stag Parties", description: "Competitive laser tag or axe throwing, with the option to add food and drink packages." },
+            { title: "Hen & Stag Parties", description: "Competitive axe throwing now, with laser tag joining once that sector unlocks — add food and drink packages to either." },
             { title: "Private Hire", description: "Exclusive use of the arena for your group only — no other bookings running alongside you." },
             { title: "Anniversaries & Reunions", description: "A genuinely different way to get a group together that isn't just a meal out." },
           ]}

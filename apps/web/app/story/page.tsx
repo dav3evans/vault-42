@@ -9,8 +9,8 @@ export const metadata: Metadata = {
 const custodians = [
   {
     name: "Custodian Voss",
-    role: "Arena Marshal, Hexforce Laser Tag",
-    quote: "I've run a thousand briefings. Every group thinks they've got a strategy. Ten minutes in, it's chaos — good chaos.",
+    role: "Arena Marshal, Hexforce Laser Tag (sector locked)",
+    quote: "I've run the briefing drills a hundred times on the training floor. When the arena finally unlocks, every group's going to think they've got a strategy. Ten minutes in, it'll be chaos — good chaos.",
   },
   {
     name: "Custodian Reyes",

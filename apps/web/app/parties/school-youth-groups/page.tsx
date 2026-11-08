@@ -27,8 +27,8 @@ export default function SchoolYouthGroupsPage() {
           </Heading>
           <BulletList
             items={[
-              "Objective-based laser tag modes reward communication and strategy, not just speed.",
               "Axe throwing builds focus and hand-eye coordination under guided supervision.",
+              "Objective-based laser tag modes rewarding communication and strategy join the line-up once that sector unlocks.",
               "The Vault 42 lore gives group leaders a ready-made theme for the visit.",
               "Great for scouts, guides, school trips and holiday clubs.",
             ]}
@@ -39,8 +39,9 @@ export default function SchoolYouthGroupsPage() {
             Group discounts
           </Heading>
           <p className="mb-4 text-[0.97rem] leading-[1.75] text-text/72">
-            Organised groups booking in advance qualify for discounted per-person rates on both laser
-            tag and axe throwing — the bigger the group, the more it&apos;s worth calling ahead.
+            Organised groups booking in advance qualify for discounted per-person rates on axe throwing
+            now, with laser tag joining once that sector unlocks — the bigger the group, the more it&apos;s
+            worth calling ahead.
           </p>
           <Callout title="Plan ahead">
             Group rates and risk assessments are available on request — get in touch at least two weeks

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { PageHeader, Accent, Panel, Heading, BulletList, FaqAccordion } from "@vault42/ui";
 
 export const metadata: Metadata = {
@@ -39,8 +40,10 @@ export default function PoliciesPage() {
             items={[
               "Every session is briefed by a Vault Custodian before play begins, including laser tag arena hazards and axe throwing lane rules.",
               "Closed-lane design on axe throwing keeps throwers and spectators fully separated at all times.",
+              "Closed-toe shoes are required on the axe throwing lanes at all times.",
               "Laser tag equipment is sanitised between every session.",
               "First-aid trained staff are on site during all opening hours.",
+              "Vault 42 operates a zero-tolerance policy on intoxication — see our Safety & Waiver Policy for details.",
             ]}
           />
         </Panel>
@@ -89,6 +92,21 @@ export default function PoliciesPage() {
           A few more questions
         </Heading>
         <FaqAccordion items={policyFaqs} className="max-w-3xl" />
+        <p className="mt-8 text-[0.9rem] leading-[1.7] text-text/62">
+          For the full legal detail, see our{" "}
+          <Link href="/terms" className="text-gold no-underline">
+            Terms & Conditions
+          </Link>
+          ,{" "}
+          <Link href="/privacy" className="text-gold no-underline">
+            Privacy Policy
+          </Link>{" "}
+          and{" "}
+          <Link href="/safety" className="text-gold no-underline">
+            Safety & Waiver Policy
+          </Link>
+          .
+        </p>
       </section>
     </>
   );

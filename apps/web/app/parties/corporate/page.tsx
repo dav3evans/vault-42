@@ -26,7 +26,7 @@ export default function CorporateEventsPage() {
           variant="feature"
           columns={3}
           items={[
-            { title: "Team Sessions", description: "Book a block of laser tag or axe throwing games for a single team." },
+            { title: "Team Sessions", description: "Book a block of axe throwing lanes for a single team now, with laser tag sessions joining once that sector unlocks." },
             { title: "Multi-Team Tournaments", description: "Run a bracket across departments with live scoring on the arena screens." },
             { title: "Full Arena Hire", description: "Exclusive hire for up to 30 players — the whole venue, just your group." },
           ]}

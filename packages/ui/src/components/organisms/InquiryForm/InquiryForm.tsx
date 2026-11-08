@@ -7,8 +7,10 @@ import { cn } from "../../../lib/cn";
 export type InquiryFormField = {
   name: string;
   label: string;
-  type?: "text" | "email" | "tel" | "textarea";
+  type?: "text" | "email" | "tel" | "textarea" | "select" | "file";
   required?: boolean;
+  options?: string[];
+  accept?: string;
 };
 
 export type InquiryFormProps = {
@@ -57,6 +59,30 @@ export function InquiryForm({
               required={field.required}
               rows={4}
               className="border border-white/10 bg-bg-2 px-3.5 py-2.5 text-text outline-none focus:border-gold/50"
+            />
+          ) : field.type === "select" ? (
+            <select
+              name={field.name}
+              required={field.required}
+              defaultValue=""
+              className="border border-white/10 bg-bg-2 px-3.5 py-2.5 text-text outline-none focus:border-gold/50"
+            >
+              <option value="" disabled>
+                Select an option
+              </option>
+              {field.options?.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+          ) : field.type === "file" ? (
+            <input
+              name={field.name}
+              type="file"
+              accept={field.accept}
+              required={field.required}
+              className="border border-white/10 bg-bg-2 px-3.5 py-2.5 text-text outline-none file:mr-3 file:border-0 file:bg-gold/16 file:px-3 file:py-1.5 file:text-text file:uppercase file:tracking-[0.1em] focus:border-gold/50"
             />
           ) : (
             <input

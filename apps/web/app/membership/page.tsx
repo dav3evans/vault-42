@@ -22,24 +22,24 @@ export default function MembershipPage() {
       <section className="mx-auto max-w-(--container-max) px-3.5 py-16">
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
           <PriceCard
-            title="Laser Tag Membership"
-            description="For Explorers who want the Hexforce Arena on tap."
-            rows={[
-              { label: "Monthly", value: "£12.99" },
-              { label: "Member game rate", value: "£4.95" },
-              { label: "Guest passes", value: "2 / month" },
-            ]}
-            note="Cancel any time. Discount applies from your first session."
-          />
-          <PriceCard
             title="Axe Throwing Membership"
-            description="For regulars who want cheaper lanes and priority slots."
+            description="For regulars who want cheaper lanes and priority slots — live now."
             rows={[
               { label: "Monthly", value: "£14.99" },
               { label: "Member lane rate", value: "£15" },
               { label: "Guest passes", value: "1 / month" },
             ]}
             note="Cancel any time. Priority booking on weekend slots."
+          />
+          <PriceCard
+            title="Laser Tag Membership"
+            description="For Explorers who want the Hexforce Arena on tap — sector locked."
+            rows={[
+              { label: "Monthly", value: "£12.99" },
+              { label: "Member game rate", value: "£4.95" },
+              { label: "Guest passes", value: "2 / month" },
+            ]}
+            note="Planned pricing — sign-ups open once laser tag unlocks."
           />
         </div>
       </section>

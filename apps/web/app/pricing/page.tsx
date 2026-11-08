@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHeader, Accent, PriceCard, Heading, Panel, ActionRow, Callout } from "@vault42/ui";
+import { bookingHref } from "@/lib/site-nav";
 
 export const metadata: Metadata = {
   title: "Pricing & Booking",
-  description: "Transparent pricing for laser tag, axe throwing, parties and memberships at Vault 42.",
+  description: "Transparent pricing for axe throwing at Vault 42, plus planned pricing for laser tag and parties once those sectors unlock.",
 };
 
 export default function PricingPage() {
@@ -22,19 +23,9 @@ export default function PricingPage() {
 
       <section className="mx-auto max-w-(--container-max) px-3.5 py-16">
         <Heading as="h2" size="section" className="mb-8">
-          Laser tag & axe throwing
+          Axe throwing — live now
         </Heading>
         <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
-          <PriceCard
-            title="Laser Tag"
-            description="Standard sessions for casual visits, repeat games and quick decisions."
-            rows={[
-              { label: "1 Game", value: "£6.95 pp" },
-              { label: "2 Games", value: "£11.95 pp" },
-              { label: "3 Games", value: "£14.95 pp" },
-            ]}
-            note="Exclusive hire: 1 game £130 · 2 games £230 · 3 games £300 for up to 30 players."
-          />
           <PriceCard
             title="Axe Throwing"
             description="Digital Champ Throw pricing by group size."
@@ -46,13 +37,38 @@ export default function PricingPage() {
               { label: "6 Players", value: "£20 pp" },
             ]}
           />
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-(--container-max) px-3.5 pb-16">
+        <Heading as="h2" size="section" className="mb-8">
+          Laser tag — sector locked
+        </Heading>
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
+          <PriceCard
+            title="Laser Tag"
+            description="Planned pricing — not bookable until the Hexforce Arena unlocks."
+            rows={[
+              { label: "1 Game", value: "£6.95 pp" },
+              { label: "2 Games", value: "£11.95 pp" },
+              { label: "3 Games", value: "£14.95 pp" },
+            ]}
+            note="Exclusive hire: 1 game £130 · 2 games £230 · 3 games £300 for up to 30 players, once launched."
+          />
           <PriceCard
             title="Wasteland Warriors Kids Club"
             description="1.5 hours of guided laser tag for younger Explorers."
             rows={[{ label: "Per child", value: "£10" }]}
-            note="Minimum of 3 games. Every Saturday and Sunday at 10:20 AM."
+            note="Minimum of 3 games. Resumes every Saturday and Sunday at 10:20 AM once laser tag unlocks."
           />
         </div>
+        <p className="mt-6 text-sm text-text/62">
+          Register for priority access on the{" "}
+          <Link href="/laser-tag" className="text-gold no-underline">
+            Laser Tag
+          </Link>{" "}
+          page — we&apos;ll email you the moment this sector unlocks.
+        </p>
       </section>
 
       <section className="mx-auto max-w-(--container-max) px-3.5 pb-16">
@@ -62,38 +78,43 @@ export default function PricingPage() {
         <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
           <PriceCard
             title="Command Centre Package"
-            description="Our classic laser tag birthday party."
+            description="Our classic laser tag birthday party — sector locked."
             rows={[
               { label: "Per person", value: "£16.99" },
               { label: "Game time", value: "2 games" },
             ]}
-            note="Includes a private party room and refreshments."
+            note="Returns once laser tag unlocks."
           />
           <PriceCard
             title="Skull Temple Package"
-            description="Mixed laser tag and axe throwing session."
+            description="A mixed laser tag and axe throwing session — sector locked."
             rows={[
               { label: "Per person", value: "£21.99" },
               { label: "Game time", value: "1 game + axe lane" },
             ]}
-            note="Recommended for ages 10 and up."
+            note="Returns once laser tag unlocks."
           />
           <PriceCard
             title="Bio-Dome Package"
-            description="Our premium party package."
+            description="Our premium party package — sector locked."
             rows={[
               { label: "Per person", value: "£24.99" },
               { label: "Game time", value: "3 games" },
             ]}
-            note="Includes food, drinks and a goodie bag."
+            note="Includes food, drinks and a goodie bag. Returns once laser tag unlocks."
           />
         </div>
         <p className="mt-6 text-sm text-text/62">
-          See the full breakdown of inclusions and add-ons on the{" "}
+          Want a party now? Axe Throwing party bookings are available by enquiry — pricing confirmed when
+          you get in touch. See the{" "}
           <Link href="/parties/birthday" className="text-gold no-underline">
             Birthday Parties
           </Link>{" "}
-          page.
+          page or{" "}
+          <Link href="/contact" className="text-gold no-underline">
+            contact us
+          </Link>
+          .
         </p>
       </section>
 
@@ -104,28 +125,29 @@ export default function PricingPage() {
           </Heading>
           <div className="grid gap-3">
             <ActionRow
-              title="Online booking"
-              description="A full online booking system is coming soon, with live availability and payment."
-              actionLabel="Coming Soon"
-              href="/contact"
-              variant="secondary"
+              title="Book online"
+              description="Book axe throwing instantly online via our booking partner, Wanna Book."
+              actionLabel="Book Now"
+              href={bookingHref}
             />
             <ActionRow
               title="Call to book"
-              description="The fastest way to book right now — a Vault Custodian will confirm your slot on the spot."
+              description="Prefer to talk it through? A Vault Custodian will confirm your slot on the spot."
               actionLabel="02476 954242"
               href="tel:02476954242"
+              variant="secondary"
             />
             <ActionRow
               title="Enquire online"
-              description="Send us your preferred date and group size and we'll get back to you."
+              description="For parties, corporate hire or anything custom — send your details and we'll get back to you."
               actionLabel="Contact Us"
               href="/contact"
               variant="secondary"
             />
           </div>
           <Callout title="Membership discounts" className="mt-6">
-            Laser Tag and Axe Throwing members get discounted rates on every visit — see the{" "}
+            Axe Throwing members get discounted rates on every visit, with Laser Tag membership discounts
+            returning once that sector unlocks — see the{" "}
             <Link href="/membership" className="text-gold no-underline">
               Membership
             </Link>{" "}

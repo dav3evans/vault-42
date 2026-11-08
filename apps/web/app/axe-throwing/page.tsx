@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageHeader, Panel, Heading, Accent, BulletList, Tag, TileGridPanel } from "@vault42/ui";
+import { bookingHref } from "@/lib/site-nav";
 
 export const metadata: Metadata = {
   title: "Axe Throwing",
@@ -18,8 +19,8 @@ export default function AxeThrowingPage() {
         }
         description="Unlike static axe lanes, Vault 42's digital Champ Throw system gives you moving targets, real-time scoring and 16 interactive game modes."
         actions={[
-          { label: "See Pricing", href: "/pricing" },
-          { label: "Book Axe Throwing", href: "/contact", variant: "secondary" },
+          { label: "Book Axe Throwing", href: bookingHref },
+          { label: "See Pricing", href: "/pricing", variant: "secondary" },
         ]}
       />
 
@@ -48,6 +49,8 @@ export default function AxeThrowingPage() {
             items={[
               "Every lane is briefed by a Vault Custodian before your first throw.",
               "Closed-lane design keeps throwers and spectators separated at all times.",
+              "Closed-toe shoes are required on the lanes — no sandals or open-toe footwear.",
+              "A minimum age applies — see our Safety & Waiver Policy or ask when booking.",
               "16 interactive game modes, from precision challenges to head-to-head knockout.",
               "Suitable for beginners through to seasoned throwers.",
             ]}

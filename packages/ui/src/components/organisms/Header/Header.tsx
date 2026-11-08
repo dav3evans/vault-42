@@ -1,13 +1,13 @@
 import type { ReactNode } from "react";
 import { Brand } from "../../atoms/Brand/Brand";
 import { NavLink } from "../../atoms/NavLink/NavLink";
+import { NavDropdown, type NavDropdownItem } from "../../molecules/NavDropdown/NavDropdown";
 import { Button } from "../../atoms/Button/Button";
 import { cn } from "../../../lib/cn";
 
-export type HeaderNavItem = {
-  label: string;
-  href: string;
-};
+export type HeaderNavItem =
+  | { label: string; href: string; items?: undefined }
+  | { label: string; href?: undefined; items: NavDropdownItem[] };
 
 export type HeaderProps = {
   brandTitle: string;
@@ -43,11 +43,15 @@ export function Header({
           aria-label="Primary navigation"
           className="flex w-full flex-wrap items-center gap-3.5 max-[520px]:hidden min-[760px]:w-auto min-[760px]:justify-end"
         >
-          {links.map((link) => (
-            <NavLink key={link.label} href={link.href}>
-              {link.label}
-            </NavLink>
-          ))}
+          {links.map((link) =>
+            link.items ? (
+              <NavDropdown key={link.label} label={link.label} items={link.items} />
+            ) : (
+              <NavLink key={link.label} href={link.href}>
+                {link.label}
+              </NavLink>
+            ),
+          )}
           <Button href={bookHref} size="sm">
             Book Now
           </Button>

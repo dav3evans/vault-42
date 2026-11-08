@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { Eyebrow } from "../../atoms/Eyebrow/Eyebrow";
 import { FooterLinkGroup, type FooterLink } from "../../molecules/FooterLinkGroup/FooterLinkGroup";
+import { SocialLinks, type SocialLinkItem } from "../../molecules/SocialLinks/SocialLinks";
 import { cn } from "../../../lib/cn";
 
 export type FooterColumn = {
@@ -13,10 +14,11 @@ export type FooterProps = {
   blurb: ReactNode;
   columns: FooterColumn[];
   copyright: ReactNode;
+  social?: SocialLinkItem[];
   className?: string;
 };
 
-export function Footer({ eyebrow, blurb, columns, copyright, className }: FooterProps) {
+export function Footer({ eyebrow, blurb, columns, copyright, social, className }: FooterProps) {
   return (
     <footer className={cn("relative border-t border-white/6 bg-[#060e15] pt-9 pb-28", className)}>
       <div className="mx-auto max-w-(--container-max) px-3.5">
@@ -24,6 +26,7 @@ export function Footer({ eyebrow, blurb, columns, copyright, className }: Footer
           <div>
             <Eyebrow>{eyebrow}</Eyebrow>
             <p className="mt-3 max-w-[500px] leading-[1.72] text-text/58">{blurb}</p>
+            {social && social.length > 0 && <SocialLinks items={social} className="mt-4.5" />}
           </div>
           {columns.map((column) => (
             <FooterLinkGroup key={column.title} title={column.title} links={column.links} />

@@ -14,7 +14,7 @@ export default function EscapeRoomsPage() {
         eyebrow="Hexcape Escape Rooms"
         heading={
           <>
-            Planned for a <Accent>later launch phase</Accent>
+            Sector locked <Accent>{"// coming soon"}</Accent>
           </>
         }
         description="Hexcape is part of the wider Vault 42 world, but the escape rooms will not be open at launch. They're shown here honestly, because they're central to where the Vault is heading."
@@ -69,7 +69,7 @@ export default function EscapeRoomsPage() {
               { name: "email", label: "Email", type: "email", required: true },
             ]}
             submitLabel="Notify Me"
-            successMessage="You're on the list — we'll email you the moment Hexcape opens for booking."
+            successMessage="You're on the list — enter your email to receive priority access and early-bird tickets when this sector unlocks."
           />
         </Panel>
       </section>
